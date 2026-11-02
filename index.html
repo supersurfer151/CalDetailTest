@@ -113,23 +113,52 @@
       </div>
     </section>
 
-    <!-- ============ MARINE (collage) ============ -->
-    <section class="heritage" id="marine">
-      <figure class="ghost g1" data-parallax="0.1"><img src="assets/cd/boat-bow-hull-teal-stripe-detail-pembroke.webp" alt="" /></figure>
-      <figure class="ghost g2" data-parallax="-0.12"><img src="assets/cd/twin-evinrude-jet-ski-tow-pembroke-sunset.webp" alt="" /></figure>
-      <figure class="ghost g3" data-parallax="0.14"><img src="assets/cd/luxury-rv-interior-lounge-seating-pembroke-area.webp" alt="" /></figure>
-      <figure class="ghost g4" data-parallax="-0.08"><img src="assets/cd/boat-cabin-roof-polished-marina-pembroke.webp" alt="" /></figure>
-
-      <div class="heritage-copy reveal">
-        <figure class="heritage-img"><img src="assets/cd/white-yacht-dry-dock-detail-pembroke-ma.webp" alt="White yacht detailed in dry dock" /></figure>
-        <p class="eyebrow">On the Water</p>
-        <h2 class="display">Mobile Marine<br />Detailing</h2>
+    <!-- ============ MARINE: 3D BOAT EXPLORER ============ -->
+    <section class="explorer" id="marine">
+      <div class="explorer-head reveal">
+        <p class="eyebrow">Mobile Marine Detailing</p>
+        <h2 class="display">Build Your<br />Boat Detail</h2>
         <p class="lede">
-          We also bring that same standard to the water. Our mobile marine detailing service travels to marinas
-          and driveways across the South Shore, handling boat hull cleaning, marine ceramic coating, and boat
-          shrink wrapping right where your vessel sits.
+          We bring the same standard to the water, travelling to marinas, docks and driveways across the South Shore
+          and Cape Cod. Spin the boat, click the part you want taken care of, and build your quote.
         </p>
-        <a href="#contact" class="btn btn-dark">Schedule marine detailing</a>
+      </div>
+
+      <div class="explorer-grid">
+        <div class="boat-view">
+          <div class="boat-stage" aria-label="Interactive 3D boat. Drag to rotate, click a part to choose a zone.">
+            <p class="boat-status">Loading 3D boat…</p>
+            <span class="boat-tip" hidden></span>
+          </div>
+          <p class="boat-hint">Drag to rotate · Pinch or Ctrl + scroll to zoom · Click a part of the boat</p>
+          <div class="zone-tabs" role="tablist" aria-label="Boat zones">
+            <button class="zone-tab" role="tab" data-zone="1">Hull</button>
+            <button class="zone-tab" role="tab" data-zone="2">Topside &amp; Deck</button>
+            <button class="zone-tab" role="tab" data-zone="3">Console &amp; Interior</button>
+            <button class="zone-tab" role="tab" data-zone="4">Metal &amp; Rails</button>
+            <button class="zone-tab" role="tab" data-zone="5">Whole Boat</button>
+          </div>
+        </div>
+
+        <aside class="boat-side">
+          <div class="zone-panel" aria-live="polite"></div>
+
+          <form class="quote-form" novalidate>
+            <h4>Your quote request</h4>
+            <ul class="quote-summary"></ul>
+            <div class="field-row">
+              <label>Boat length (ft)<input name="feet" type="number" min="5" max="150" inputmode="decimal" placeholder="e.g. 24" /></label>
+              <label class="tick"><input name="tower" type="checkbox" /> Tower or flybridge</label>
+            </div>
+            <label>Make &amp; model<input name="boat" type="text" placeholder="e.g. 2019 Boston Whaler 230" /></label>
+            <label>Where is it kept?<input name="location" type="text" placeholder="Marina, town or driveway" /></label>
+            <label>Notes<textarea name="notes" rows="2" placeholder="Condition, timing, anything we should know"></textarea></label>
+            <label>Your name<input name="custname" type="text" autocomplete="name" /></label>
+            <p class="wrap-estimate" hidden></p>
+            <p class="pricing-note">Detailing is priced per linear foot and adjusted for condition. We'll confirm everything in your quote.</p>
+            <button type="submit" class="btn btn-dark" disabled>Request a quote</button>
+          </form>
+        </aside>
       </div>
     </section>
 
@@ -298,9 +327,23 @@
       <span>© <span id="year"></span> Callahan Detail. All rights reserved.</span>
       <span>Premium auto &amp; marine detailing · Pembroke, MA</span>
     </div>
+    <p class="credit">
+      3D boat based on <a href="https://sketchfab.com/3d-models/2004-17-scout-center-console-185e7c1dbf254b57b42b1979c45e4117" target="_blank" rel="noopener">“2004 17' Scout - Center Console”</a>
+      by <a href="https://sketchfab.com/boatusfoundation" target="_blank" rel="noopener">BoatUS Foundation</a>,
+      licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (modified).
+    </p>
   </footer>
 
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="main.js"></script>
+  <script type="module" src="explorer.js"></script>
 </body>
 </html>
