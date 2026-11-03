@@ -43,7 +43,7 @@ const ZONE_DATA = {
   },
 };
 
-const section = document.getElementById("marine");
+const section = document.querySelector(".explorer");
 const stage = section.querySelector(".boat-stage");
 const status = section.querySelector(".boat-status");
 const tip = section.querySelector(".boat-tip");
