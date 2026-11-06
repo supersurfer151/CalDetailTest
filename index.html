@@ -18,6 +18,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.13/dist/lenis.css" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="configurator.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -262,6 +263,60 @@
           </a>
         </div>
       </div>
+    </section>
+
+    <!-- ================= CONFIGURATOR (configurator.js + car.js + configurator.css) ================= -->
+    <section class="cfg" id="configurator" aria-labelledby="cfg-title" data-state="overview">
+      <div class="cfg-stage">
+        <div class="cfg-canvas" aria-hidden="true">
+          <img class="cfg-poster" src="assets/car/poster.webp" alt="" width="1600" height="900" loading="lazy" />
+        </div>
+        <svg class="cfg-lines" aria-hidden="true">
+          <g data-cat="exterior"><path /><circle class="cfg-ring" r="11" /><circle class="cfg-dot" r="3.5" /></g>
+          <g data-cat="interior"><path /><circle class="cfg-ring" r="11" /><circle class="cfg-dot" r="3.5" /></g>
+        </svg>
+
+        <header class="cfg-head">
+          <p class="eyebrow">Interactive · Automotive</p>
+          <h2 class="display" id="cfg-title">Configure<br />Your Detail</h2>
+          <p class="cfg-sub">Choose exterior or interior to explore every service we offer for your car.</p>
+        </header>
+
+        <button class="cfg-hot" type="button" data-cat="exterior" aria-expanded="false" aria-controls="cfg-panel">
+          <span class="cfg-hot-name">Exterior</span>
+          <span class="cfg-hot-meta"><span data-cfg-count="exterior"></span> · Paint, wheels &amp; glass</span>
+        </button>
+        <button class="cfg-hot" type="button" data-cat="interior" aria-expanded="false" aria-controls="cfg-panel">
+          <span class="cfg-hot-name">Interior</span>
+          <span class="cfg-hot-meta"><span data-cfg-count="interior"></span> · Seats, carpet &amp; trim</span>
+        </button>
+
+        <p class="cfg-status" role="status">Loading vehicle</p>
+        <p class="cfg-hint" aria-hidden="true">Drag to rotate · Click the car or a label</p>
+      </div>
+
+      <aside class="cfg-panel" id="cfg-panel" aria-label="Detailing services">
+        <div class="cfg-panel-top">
+          <button class="cfg-back" type="button"><span aria-hidden="true">←</span> Vehicle</button>
+          <div class="cfg-tabs" role="tablist" aria-label="Service category">
+            <button class="cfg-tab" type="button" role="tab" data-cat="exterior" aria-selected="false" aria-controls="cfg-panel">Exterior</button>
+            <button class="cfg-tab" type="button" role="tab" data-cat="interior" aria-selected="false" aria-controls="cfg-panel" tabindex="-1">Interior</button>
+            <span class="cfg-tab-ind" aria-hidden="true"></span>
+          </div>
+        </div>
+        <p class="cfg-pick-hint">Choose a category to see its services.</p>
+        <div class="cfg-body" data-lenis-prevent>
+          <div class="cfg-cat">
+            <h3 class="cfg-cat-title"></h3>
+            <p class="cfg-cat-blurb"></p>
+          </div>
+          <ol class="cfg-list"></ol>
+        </div>
+        <div class="cfg-foot">
+          <p class="cfg-foot-note"></p>
+          <a href="#contact" class="btn btn-light cfg-quote">Request a quote <span class="cfg-quote-count"></span></a>
+        </div>
+      </aside>
     </section>
 
     <!-- ================= SERVICE CHAPTERS ================= -->
@@ -815,6 +870,9 @@
         3D boat based on <a href="https://sketchfab.com/3d-models/2004-17-scout-center-console-185e7c1dbf254b57b42b1979c45e4117" target="_blank" rel="noopener">“2004 17' Scout - Center Console”</a>
         by <a href="https://sketchfab.com/boatusfoundation" target="_blank" rel="noopener">BoatUS Foundation</a>,
         licensed under <a href="http://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (modified).
+        3D car based on <a href="https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept" target="_blank" rel="noopener">“Car Concept”</a>
+        by Eric Chadwick / Darmstadt Graphics Group,
+        licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (modified).
       </p>
     </div>
   </footer>
@@ -838,5 +896,6 @@
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="main.js"></script>
   <script type="module" src="explorer.js"></script>
+  <script type="module" src="configurator.js"></script>
 </body>
 </html>

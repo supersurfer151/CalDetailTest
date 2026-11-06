@@ -1,0 +1,15 @@
+Model Information:
+* title:	Car Concept
+* source:	https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept
+* author:	Eric Chadwick, Darmstadt Graphics Group GmbH (2024), from a public-domain model by Unity Fan
+
+Model License:
+* license type:	CC-BY-4.0 (https://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed. Khronos logos are NOT covered by the license.
+
+Modifications for Callahan Detail:
+* Removed the Khronos logo texture (Khronos_C) and every reference to it (emissive logo decals, licence plate).
+* Licence plate hidden at runtime. Files renamed to car.gltf / car.bin.
+
+Credit (shown in the site footer):
+3D car based on "Car Concept" by Eric Chadwick / Darmstadt Graphics Group, licensed under CC BY 4.0 (modified).
