@@ -12,12 +12,10 @@
     requestAnimationFrame(raf);
   }
   const header = $("#header");
-  const chapterNav = $(".chapter-nav");
 
   function scrollToEl(target) {
-    // leave room for the fixed header, plus the sticky chapter bar inside the services chapters
-    const inChapters = target.closest(".chapters") && target !== $(".chapters");
-    const offset = -(header.offsetHeight + (inChapters ? chapterNav.offsetHeight : 0));
+    // leave room for the fixed header (the configurator is built to sit under it, full-screen)
+    const offset = target.id === "configurator" ? 0 : -header.offsetHeight;
     lenis ? lenis.scrollTo(target, { offset }) : window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY + offset, behavior: "smooth" });
   }
 
@@ -84,23 +82,7 @@
     }
   }
 
-  // ---------- Chapter bar: highlight the service in view ----------
-  const chLinks = $$(".chapter-nav a");
-  const chBar = $(".chapter-nav-inner");
-  const chapters = $$("[data-chapter]");
-  function onScrollChapters() {
-    const line = header.offsetHeight + chapterNav.offsetHeight + window.innerHeight * 0.25;
-    let current = null;
-    for (const c of chapters) if (c.getBoundingClientRect().top <= line) current = c.id;
-    chLinks.forEach((a) => {
-      const on = a.dataset.ch === current;
-      // keep the active tab visible on narrow screens; only scroll the bar sideways, never the page
-      if (on && !a.classList.contains("is-active")) chBar.scrollTo({ left: a.offsetLeft - (chBar.clientWidth - a.offsetWidth) / 2, behavior: "smooth" });
-      a.classList.toggle("is-active", on);
-    });
-  }
-
-  const onScroll = () => { onScrollHeader(); onScrollParallax(); onScrollChapters(); };
+  const onScroll = () => { onScrollHeader(); onScrollParallax(); };
   lenis ? lenis.on("scroll", onScroll) : window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
   onScroll();
@@ -141,32 +123,6 @@
   const reelSrc = reelVideo.querySelector("source");
   if (reelSrc) fetch(reelSrc.src, { method: "HEAD" }).then((r) => { if (r.ok) playBtn.hidden = false; }).catch(() => {});
   playBtn.addEventListener("click", () => { reelVideo.controls = true; reelVideo.play(); reel.classList.add("is-playing"); });
-
-  // ---------- Chapter photo thumbnails ----------
-  $$(".ch-media").forEach((media) => {
-    const main = $(".ch-main img", media);
-    $$(".ch-thumb", media).forEach((btn) => btn.addEventListener("click", () => {
-      if (btn.classList.contains("is-active")) return;
-      $$(".ch-thumb", media).forEach((b) => b.classList.toggle("is-active", b === btn));
-      main.classList.add("is-swapping");
-      const next = new Image();
-      next.onload = () => { main.src = next.src; main.alt = $("img", btn).alt; main.classList.remove("is-swapping"); };
-      next.src = btn.dataset.full;
-    }));
-  });
-
-  // ---------- Shrink-wrap estimator (published pricing: $25/ft under 30 ft, $30/ft over 30 ft or with tower/flybridge) ----------
-  const calc = $(".wrap-calc");
-  if (calc) {
-    const len = $("input[type=number]", calc), tower = $("input[type=checkbox]", calc), out = $(".wrap-calc-out", calc);
-    const update = () => {
-      const ft = parseFloat(len.value);
-      if (!(ft > 0)) { out.textContent = "Enter your boat's length for an estimate."; return; }
-      const rate = ft >= 30 || tower.checked ? 30 : 25;
-      out.innerHTML = `<strong>$${Math.round(ft * rate).toLocaleString()}</strong> estimated · ${ft} ft × $${rate}/ft. Add-ons like access doors are quoted separately.`;
-    };
-    len.addEventListener("input", update); tower.addEventListener("change", update);
-  }
 
   // ---------- Quote form ----------
   const form = $("#quote");

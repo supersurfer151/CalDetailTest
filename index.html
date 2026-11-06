@@ -17,8 +17,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.13/dist/lenis.css" />
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="configurator.css" />
+  <link rel="stylesheet" href="styles.css?v=20261106b" />
+  <link rel="stylesheet" href="configurator.css?v=20261106b" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -49,19 +49,19 @@
             <div class="mega-inner">
               <div class="mega-col">
                 <p class="mega-label">Automotive · Pembroke shop</p>
-                <a href="#auto-detailing"><span>01</span>Auto Detailing</a>
-                <a href="#paint-correction"><span>02</span>Paint Correction</a>
-                <a href="#ceramic-coating"><span>03</span>Ceramic Coating</a>
-                <a href="#ppf"><span>04</span>XPEL Paint Protection Film</a>
-                <a href="#window-tinting"><span>05</span>Window Tinting</a>
-                <a href="#headlights"><span>06</span>Headlight Restoration</a>
+                <a href="#configurator" data-cfg-open="exterior-detailing"><span>01</span>Auto Detailing</a>
+                <a href="#configurator" data-cfg-open="paint-correction"><span>02</span>Paint Correction</a>
+                <a href="#configurator" data-cfg-open="ceramic-coating"><span>03</span>Ceramic Coating</a>
+                <a href="#configurator" data-cfg-open="ppf"><span>04</span>XPEL Paint Protection Film</a>
+                <a href="#configurator" data-cfg-open="window-tinting"><span>05</span>Window Tinting</a>
+                <a href="#configurator" data-cfg-open="headlight-restoration"><span>06</span>Headlight Restoration</a>
               </div>
               <div class="mega-col">
                 <p class="mega-label">Motorcycle</p>
                 <a href="#motorcycle"><span>07</span>Motorcycle Detailing</a>
                 <p class="mega-label">Marine · Mobile</p>
                 <a href="#marine"><span>08</span>Marine Detailing</a>
-                <a href="#shrink-wrap"><span>09</span>Boat Shrink Wrapping</a>
+                <a href="#marine" data-boat-zone="5"><span>09</span>Boat Shrink Wrapping</a>
               </div>
               <a class="mega-feature" href="#marine">
                 <img src="assets/cd/thumb/boat-gunwale-side-deck-sunset-pembroke-waterfront.jpg" alt="" loading="lazy" />
@@ -86,7 +86,7 @@
 
   <nav class="menu" id="menu" aria-hidden="true">
     <ul>
-      <li><a href="#services">Services</a></li>
+      <li><a href="#configurator">Services</a></li>
       <li><a href="#marine">Marine &amp; 3D Boat</a></li>
       <li><a href="#work">Our Work</a></li>
       <li><a href="#reviews">Reviews</a></li>
@@ -112,7 +112,7 @@
         <p class="hero-sub reveal">Paint correction, XPEL ceramic coating and paint protection film at our Pembroke shop, plus mobile marine detailing at your marina, dock or driveway.</p>
         <div class="btn-row reveal">
           <a href="#contact" class="btn btn-light">Get a quote</a>
-          <a href="#services" class="btn btn-ghost">Explore services</a>
+          <a href="#configurator" class="btn btn-ghost">Explore services</a>
         </div>
       </div>
       <div class="hero-bar">
@@ -186,85 +186,6 @@
       </div>
     </section>
 
-    <!-- ================= SERVICES INDEX ================= -->
-    <section class="services-index section" id="services">
-      <div class="container">
-        <div class="sec-head">
-          <div>
-            <p class="eyebrow reveal"><span class="sec-num">02</span> Services</p>
-            <h2 class="display reveal">Nine services.<br />One standard.</h2>
-          </div>
-          <p class="lead reveal">Auto and motorcycle work is done in our controlled Pembroke shop. Marine detailing and shrink wrapping come to you. Choose a service to see exactly what's included.</p>
-        </div>
-        <div class="svc-grid">
-
-          <a class="svc-card reveal" href="#auto-detailing">
-            <span class="svc-img"><img src="assets/cd/thumb/black-mercedes-sedan-detailed-pembroke-driveway.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">01</span>
-            <span class="svc-name">Auto Detailing</span>
-            <span class="svc-short">Complete interior &amp; exterior packages</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#paint-correction">
-            <span class="svc-img"><img src="assets/cd/thumb/porsche-hood-headlight-reflection-pembroke-detail.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">02</span>
-            <span class="svc-name">Paint Correction</span>
-            <span class="svc-short">Remove swirls, scratches &amp; oxidation</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#ceramic-coating">
-            <span class="svc-img"><img src="assets/cd/thumb/yellow-corvette-detail-shop-pembroke.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">03</span>
-            <span class="svc-name">Ceramic Coating</span>
-            <span class="svc-short">XPEL Fusion for paint, wheels &amp; glass</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#ppf">
-            <span class="svc-img"><img src="assets/cd/thumb/paint-protection-film-blue-car-pembroke.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">04</span>
-            <span class="svc-name">XPEL Paint Protection Film</span>
-            <span class="svc-short">Self-healing film against chips</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#window-tinting">
-            <span class="svc-img"><img src="assets/cd/thumb/2023-Tesla-Model-Y-Grey-Black-HTX-XRP-WC-19-png.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">05</span>
-            <span class="svc-name">Window Tinting</span>
-            <span class="svc-short">Heat, glare &amp; UV rejection</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#headlights">
-            <span class="svc-img"><img src="assets/cd/thumb/black-ram-pickup-front-angle-headlight-pembroke.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">06</span>
-            <span class="svc-name">Headlight Restoration</span>
-            <span class="svc-short">Clear, bright lenses in about an hour</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#motorcycle">
-            <span class="svc-img"><img src="assets/cd/thumb/blue-harley-davidson-cruiser-full-side-pembroke-garage.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">07</span>
-            <span class="svc-name">Motorcycle Detailing</span>
-            <span class="svc-short">Paint, chrome, leather &amp; ceramic</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#marine">
-            <span class="svc-img"><img src="assets/cd/thumb/boat-gunwale-side-deck-sunset-pembroke-waterfront.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">08</span>
-            <span class="svc-name">Marine Detailing</span>
-            <span class="svc-short">Hull, topside, interior &amp; metal</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-          <a class="svc-card reveal" href="#shrink-wrap">
-            <span class="svc-img"><img src="assets/cd/thumb/boat-shrink-wrap-storage-yard-pembroke.jpg" alt="" loading="lazy" /></span>
-            <span class="svc-num">09</span>
-            <span class="svc-name">Boat Shrink Wrapping</span>
-            <span class="svc-short">Custom-fitted winter protection</span>
-            <span class="svc-arrow" aria-hidden="true">→</span>
-          </a>
-        </div>
-      </div>
-    </section>
-
     <!-- ================= CONFIGURATOR (configurator.js + car.js + configurator.css) ================= -->
     <section class="cfg" id="configurator" aria-labelledby="cfg-title" data-state="overview">
       <div class="cfg-stage">
@@ -277,7 +198,7 @@
         </svg>
 
         <header class="cfg-head">
-          <p class="eyebrow">Interactive · Automotive</p>
+          <p class="eyebrow"><span class="sec-num">02</span> Services · Automotive</p>
           <h2 class="display" id="cfg-title">Configure<br />Your Detail</h2>
           <p class="cfg-sub">Choose exterior or interior to explore every service we offer for your car.</p>
         </header>
@@ -319,277 +240,71 @@
       </aside>
     </section>
 
-    <!-- ================= SERVICE CHAPTERS ================= -->
-    <div class="chapters">
-      <nav class="chapter-nav" aria-label="Service sections">
-        <div class="chapter-nav-inner">
-          <a href="#auto-detailing" data-ch="auto-detailing">01 Auto Detailing</a>
-          <a href="#paint-correction" data-ch="paint-correction">02 Paint Correction</a>
-          <a href="#ceramic-coating" data-ch="ceramic-coating">03 Ceramic Coating</a>
-          <a href="#ppf" data-ch="ppf">04 PPF</a>
-          <a href="#window-tinting" data-ch="window-tinting">05 Window Tint</a>
-          <a href="#headlights" data-ch="headlights">06 Headlights</a>
-          <a href="#motorcycle" data-ch="motorcycle">07 Motorcycle</a>
-          <a href="#marine" data-ch="marine">08 Marine</a>
-          <a href="#shrink-wrap" data-ch="shrink-wrap">09 Shrink Wrap</a>
+    <!-- ================= MOTORCYCLE ================= -->
+    <section class="chapter moto" id="motorcycle">
+      <div class="container chapter-grid">
+        <div class="ch-media reveal">
+          <div class="ch-main"><img src="assets/cd/blue-harley-davidson-cruiser-full-side-pembroke-garage.jpg" alt="Blue harley davidson cruiser full side garage" loading="lazy" /><span class="ch-tag">Motorcycle</span></div>
         </div>
-      </nav>
+        <div class="ch-copy">
+          <p class="eyebrow reveal">Motorcycle · Pembroke shop</p>
+          <h2 class="display reveal">Motorcycle Detailing</h2>
+          <p class="lead reveal">Salt air off Duxbury Beach, Route 3 road grime and summer bug splatter settle into paint, chrome and leather in ways a garden hose can’t touch. Every surface gets the right tools and products for its material. Cruisers, sport bikes and touring models all welcome.</p>
+          <dl class="facts reveal"><div><dt>Time</dt><dd>2 to 4 hours</dd></div><div><dt>Bikes</dt><dd>Cruiser, sport, touring</dd></div><div><dt>Coating</dt><dd>1 to 2 riding seasons</dd></div></dl>
+          <ul class="incl incl-2 reveal"><li>Hand wash and decontamination to remove road film and brake dust</li><li>Wheel, spoke and chrome polishing to a mirror finish</li><li>Paint correction on light swirls and oxidation</li><li>Leather and vinyl seat cleaning and conditioning</li><li>Engine and undercarriage degreasing where accessible</li><li>XPEL Fusion ceramic coating for tanks, fairings and chrome</li></ul>
+          <div class="btn-row ch-cta reveal">
+            <a href="#contact" class="btn btn-dark" data-quote="motorcycle">Get a quote</a>
+            <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
+          </div>
+        </div>
+      </div>
+    </section>
 
-      <header class="group-head container">
-        <p class="eyebrow">Part I</p><h2 class="display">Automotive</h2><p>At our Pembroke shop · 43 Mattakeesett St</p>
-      </header>
-
-      <section class="chapter" id="auto-detailing" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/black-mercedes-sedan-detailed-pembroke-driveway.webp" alt="Black mercedes sedan detailed driveway" loading="lazy" /><span class="ch-tag">Automotive</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/black-mercedes-sedan-detailed-pembroke-driveway.webp" aria-label="Show photo 1"><img src="assets/cd/thumb/black-mercedes-sedan-detailed-pembroke-driveway.jpg" alt="Black mercedes sedan detailed driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/audi-rs7-covered-soap-wash-driveway-pembroke.jpg" aria-label="Show photo 2"><img src="assets/cd/thumb/audi-rs7-covered-soap-wash-driveway-pembroke.jpg" alt="Audi rs7 covered soap wash driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/mercedes-amg-interior-dashboard-blue-ambient-pembroke.jpg" aria-label="Show photo 3"><img src="assets/cd/thumb/mercedes-amg-interior-dashboard-blue-ambient-pembroke.jpg" alt="Mercedes amg interior dashboard blue ambient" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/gray-mercedes-gle-front-side-driveway-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/gray-mercedes-gle-front-side-driveway-pembroke.jpg" alt="Gray mercedes gle front side driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/porsche-interior-steering-wheel-dashboard-pembroke.jpg" aria-label="Show photo 5"><img src="assets/cd/thumb/porsche-interior-steering-wheel-dashboard-pembroke.jpg" alt="Porsche interior steering wheel dashboard" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>01</span> / 09</p>
-            <h3 class="display reveal">Auto Detailing</h3>
-            <p class="lead reveal">Auto detailing goes well beyond a car wash. We combine interior deep cleaning, exterior decontamination and paint correction to restore your vehicle’s finish and protect it for the long haul.</p>
-            <p class="body reveal">South Shore weather is hard on vehicles. Road salt in the winter, beach sand from Duxbury and Scituate, and summer pollen and humidity all take a toll on paint, carpet and upholstery. Every job starts with an inspection so we can match the right process to your car’s condition.</p>
-            <dl class="facts reveal"><div><dt>Where</dt><dd>Pembroke shop</dd></div><div><dt>Vehicles</dt><dd>Cars, trucks, SUVs, vans</dd></div><div><dt>Pricing</dt><dd>By size &amp; condition</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li><strong>Complete Detail:</strong> interior cleaning and conditioning, steam-cleaned and shampooed carpet and fabric, decontamination wash, one-step polish and sealant, wheels, tires, glass and door jambs</li><li><strong>Ultimate Detail:</strong> everything in Complete, plus engine bay cleaning, full three-step paint correction and a six-month ceramic spray sealant</li><li>Add-ons: headlight restoration, paint protection film, ceramic coating and window tinting</li><li>Monthly maintenance packages to keep your vehicle freshly detailed year-round</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="auto-detailing">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
+    <!-- ================= MARINE: 3D boat explorer (explorer.js + boat.js) ================= -->
+    <section class="explorer" id="marine" aria-labelledby="explorer-title">
+      <div class="container">
+        <div class="explorer-head">
+          <p class="eyebrow reveal">Marine · Mobile service</p>
+          <h2 class="display reveal" id="explorer-title">Build Your Boat Detail</h2>
+          <p class="lede reveal">Hull cleaning, topside detailing, ceramic coatings, XPEL Marine film and custom shrink wrap, delivered dockside or at your storage yard. We bring the water, equipment and marine-grade products to you. Spin the boat, click the part you want taken care of, and build your quote.</p>
+          <dl class="facts explorer-facts reveal"><div><dt>Where</dt><dd>Mobile: we come to you</dd></div><div><dt>Detailing</dt><dd>Priced per linear foot</dd></div><div><dt>Shrink wrap</dt><dd>$25–$30 per foot</dd></div><div><dt>Certified</dt><dd>XPEL Marine installer</dd></div></dl>
+        </div>
+        <div class="explorer-grid">
+          <div class="boat-view">
+            <div class="boat-stage" aria-label="Interactive 3D boat. Drag to rotate, click a part to choose a zone.">
+              <p class="boat-status">Loading 3D boat…</p>
+              <span class="boat-tip" hidden></span>
+            </div>
+            <p class="boat-hint">Drag to rotate · Pinch or Ctrl + scroll to zoom · Click a part of the boat</p>
+            <div class="zone-tabs" role="tablist" aria-label="Boat zones">
+              <button class="zone-tab" role="tab" data-zone="1">Hull</button>
+              <button class="zone-tab" role="tab" data-zone="2">Topside &amp; Deck</button>
+              <button class="zone-tab" role="tab" data-zone="3">Console &amp; Interior</button>
+              <button class="zone-tab" role="tab" data-zone="4">Metal &amp; Rails</button>
+              <button class="zone-tab" role="tab" data-zone="5">Whole Boat</button>
             </div>
           </div>
-        </div>
-      </section>
-      <section class="chapter flip" id="paint-correction" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/porsche-hood-headlight-reflection-pembroke-detail.jpg" alt="Porsche hood headlight reflection" loading="lazy" /><span class="ch-tag">Automotive</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/porsche-hood-headlight-reflection-pembroke-detail.jpg" aria-label="Show photo 1"><img src="assets/cd/thumb/porsche-hood-headlight-reflection-pembroke-detail.jpg" alt="Porsche hood headlight reflection" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/orbital-polisher-paint-correction-pembroke-detailing.webp" aria-label="Show photo 2"><img src="assets/cd/thumb/orbital-polisher-paint-correction-pembroke-detailing.jpg" alt="Orbital polisher paint correction" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/close-up-polishing-black-car-pembroke.webp" aria-label="Show photo 3"><img src="assets/cd/thumb/close-up-polishing-black-car-pembroke.jpg" alt="Close up polishing black car" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/red-car-door-detail-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/red-car-door-detail-pembroke.jpg" alt="Red car door" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/orange-porsche-lifted-detail-bay-pembroke.webp" aria-label="Show photo 5"><img src="assets/cd/thumb/orange-porsche-lifted-detail-bay-pembroke.jpg" alt="Orange porsche lifted bay" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>02</span> / 09</p>
-            <h3 class="display reveal">Paint Correction</h3>
-            <p class="lead reveal">A multi-stage machine polishing process that removes swirl marks, light scratches, water spots and oxidation, levelling the clear coat so light reflects evenly across the surface again.</p>
-            <p class="body reveal">It’s the recommended first step before ceramic coating or PPF: coatings bond to whatever is underneath, so correcting first means you lock in gloss, not imperfections. Every panel is inspected under LED lighting and corrected individually.</p>
-            <dl class="facts reveal"><div><dt>Time</dt><dd>Half day to 2 days</dd></div><div><dt>Stages</dt><dd>Single or multi-stage</dd></div><div><dt>Best before</dt><dd>Ceramic or PPF</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Wash, clay bar and chemical decontamination to lift bonded dirt, tar and rail dust</li><li>Panel-by-panel inspection under LED lighting to map a correction plan</li><li>Dual-action or rotary polishing matched to your paint’s hardness</li><li>Removes swirl marks, spider webbing, water spots and light oxidation</li><li>Restores deep gloss and colour clarity, especially on darker paint</li><li>Creates a true surface for ceramic coating or paint protection film</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="paint-correction">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="chapter" id="ceramic-coating" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/yellow-corvette-detail-shop-pembroke.webp" alt="Yellow corvette shop" loading="lazy" /><span class="ch-tag">Automotive</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/yellow-corvette-detail-shop-pembroke.webp" aria-label="Show photo 1"><img src="assets/cd/thumb/yellow-corvette-detail-shop-pembroke.jpg" alt="Yellow corvette shop" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/detailing-products-boost-fusion-pembroke.webp" aria-label="Show photo 2"><img src="assets/cd/thumb/detailing-products-boost-fusion-pembroke.jpg" alt="Products boost fusion" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/car-hood-paint-protection-film-pembroke-detail.webp" aria-label="Show photo 3"><img src="assets/cd/thumb/car-hood-paint-protection-film-pembroke-detail.jpg" alt="Car hood paint protection film" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/black-porsche-911-garage-driveway-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/black-porsche-911-garage-driveway-pembroke.jpg" alt="Black porsche 911 garage driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/lamborghini-roadster-open-door-detail-pembroke.jpg" aria-label="Show photo 5"><img src="assets/cd/thumb/lamborghini-roadster-open-door-detail-pembroke.jpg" alt="Lamborghini roadster open door" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>03</span> / 09</p>
-            <h3 class="display reveal">Ceramic Coating</h3>
-            <p class="lead reveal">Ceramic coating is a liquid polymer that chemically bonds to paint or gelcoat, forming a hard, glass-like layer above the factory finish. Unlike wax or sealant, it stays put season after season.</p>
-            <p class="body reveal">We install XPEL Fusion coatings on cars, trucks, motorcycles and boats. Every job starts with prep work (paint correction, decontamination and panel inspection), which is what separates a coating that lasts years from one that fails in months.</p>
-            <dl class="facts reveal"><div><dt>Product</dt><dd>XPEL Fusion</dd></div><div><dt>Time</dt><dd>1 to 3 days by tier</dd></div><div><dt>For</dt><dd>Cars, bikes &amp; boats</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Multi-stage paint correction before coating on higher tiers</li><li>Full exterior coating on paint, wheels, glass, plastic trim and door jambs</li><li>Interior surface coating for added stain and UV resistance</li><li>Engine bay detailing and coating</li><li>Motorcycle coating for tanks, fairings and chrome</li><li>Marine coating for gelcoat, hull sides and topside surfaces</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="ceramic-coating">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="chapter flip" id="ppf" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/paint-protection-film-blue-car-pembroke.webp" alt="Paint protection film blue car" loading="lazy" /><span class="ch-tag">Automotive</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/paint-protection-film-blue-car-pembroke.webp" aria-label="Show photo 1"><img src="assets/cd/thumb/paint-protection-film-blue-car-pembroke.jpg" alt="Paint protection film blue car" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/white-suv-front-bumper-protection-pembroke-detail.webp" aria-label="Show photo 2"><img src="assets/cd/thumb/white-suv-front-bumper-protection-pembroke-detail.jpg" alt="White suv front bumper protection" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/white-camaro-zl1-front-end-driveway-pembroke.jpg" aria-label="Show photo 3"><img src="assets/cd/thumb/white-camaro-zl1-front-end-driveway-pembroke.jpg" alt="White camaro zl1 front end driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/silver-audi-rs7-front-quarter-panel-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/silver-audi-rs7-front-quarter-panel-pembroke.jpg" alt="Silver audi rs7 front quarter panel" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/white-chevrolet-camaro-front-bumper-pembroke.webp" aria-label="Show photo 5"><img src="assets/cd/thumb/white-chevrolet-camaro-front-bumper-pembroke.jpg" alt="White chevrolet camaro front bumper" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>04</span> / 09</p>
-            <h3 class="display reveal">XPEL Paint Protection Film</h3>
-            <p class="lead reveal">A clear, self-healing layer applied directly over your factory paint: a barrier against rock chips, road salt, bug splatter and the fine scratches that build up from daily driving.</p>
-            <p class="body reveal">We install genuine XPEL film using precision-cut patterns for each make and model. It bonds tightly and stays virtually invisible. We also install marine-grade PPF on hulls, transoms and other high-wear boat surfaces.</p>
-            <dl class="facts reveal"><div><dt>Film</dt><dd>Genuine XPEL</dd></div><div><dt>Time</dt><dd>1 to 2 days full body</dd></div><div><dt>Finish</dt><dd>Self-healing, invisible</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Paint inspection and correction before film goes on</li><li>Coverage for high-impact zones: hoods, bumpers, mirrors and rocker panels</li><li>Self-healing topcoat that removes light scratches with heat</li><li>UV and stain resistance that keeps paint from fading or yellowing</li><li>Marine PPF for hulls, transoms and exposed boat surfaces</li><li>Optional pairing with ceramic coating for gloss and easier washing</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="ppf">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="chapter" id="window-tinting" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/2023-Tesla-Model-Y-Grey-Black-HTX-XRP-WC-19-png.jpg" alt="2023 tesla model y grey black htx xrp wc 19" loading="lazy" /><span class="ch-tag">Automotive</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/2023-Tesla-Model-Y-Grey-Black-HTX-XRP-WC-19-png.jpg" aria-label="Show photo 1"><img src="assets/cd/thumb/2023-Tesla-Model-Y-Grey-Black-HTX-XRP-WC-19-png.jpg" alt="2023 tesla model y grey black htx xrp wc 19" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/car-door-open-detailing-bay-pembroke.webp" aria-label="Show photo 2"><img src="assets/cd/thumb/car-door-open-detailing-bay-pembroke.jpg" alt="Car door open bay" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/windshield-glass-detailing-pembroke-ma.webp" aria-label="Show photo 3"><img src="assets/cd/thumb/windshield-glass-detailing-pembroke-ma.jpg" alt="Windshield glass" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/black-sports-car-open-door-driveway-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/black-sports-car-open-door-driveway-pembroke.jpg" alt="Black sports car open door driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/maserati-quattroporte-driveway-detail-pembroke.webp" aria-label="Show photo 5"><img src="assets/cd/thumb/maserati-quattroporte-driveway-detail-pembroke.jpg" alt="Maserati quattroporte driveway" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>05</span> / 09</p>
-            <h3 class="display reveal">Window Tinting</h3>
-            <p class="lead reveal">A thin, optically clear film applied to the inside of your glass that blocks a significant portion of solar heat and UV while giving your vehicle a cleaner, more finished look.</p>
-            <p class="body reveal">We use film designed to resist bubbling, peeling and the purple discolouration cheaper tints develop after a few South Shore summers, and we’ll guide you to a shade that’s legal on Massachusetts roads.</p>
-            <dl class="facts reveal"><div><dt>Time</dt><dd>2 to 4 hours</dd></div><div><dt>Cure</dt><dd>3 to 5 days before rolling down</dd></div><div><dt>Where</dt><dd>Pembroke shop</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Significant UV and heat rejection to protect skin and interior surfaces</li><li>Reduced glare for safer, more comfortable driving</li><li>Added privacy and security for your vehicle’s contents</li><li>Bubble-free finish with properly trimmed edges</li><li>Fade-resistant film that holds its colour</li><li>Massachusetts-legal shade guidance</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="window-tinting">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="chapter flip" id="headlights" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/black-ram-pickup-front-angle-headlight-pembroke.jpg" alt="Black ram pickup front angle headlight" loading="lazy" /><span class="ch-tag">Automotive</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/black-ram-pickup-front-angle-headlight-pembroke.jpg" aria-label="Show photo 1"><img src="assets/cd/thumb/black-ram-pickup-front-angle-headlight-pembroke.jpg" alt="Black ram pickup front angle headlight" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/black-ram-truck-headlights-detail-pembroke.webp" aria-label="Show photo 2"><img src="assets/cd/thumb/black-ram-truck-headlights-detail-pembroke.jpg" alt="Black ram truck headlights" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/blue-suv-hood-headlight-detail-pembroke-garage.jpg" aria-label="Show photo 3"><img src="assets/cd/thumb/blue-suv-hood-headlight-detail-pembroke-garage.jpg" alt="Blue suv hood headlight garage" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/dodge-charger-hood-headlight-garage-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/dodge-charger-hood-headlight-garage-pembroke.jpg" alt="Dodge charger hood headlight garage" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/ford-explorer-rear-taillight-detail-pembroke.jpg" aria-label="Show photo 5"><img src="assets/cd/thumb/ford-explorer-rear-taillight-detail-pembroke.jpg" alt="Ford explorer rear taillight" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>06</span> / 09</p>
-            <h3 class="display reveal">Headlight Restoration</h3>
-            <p class="lead reveal">Road salt, sand, UV and temperature swings break down the coating on polycarbonate lenses until they turn yellow and hazy, cutting visibility and making a clean car look neglected.</p>
-            <p class="body reveal">We treat each lens as a paint correction project in miniature: sanding away the damage, polishing back optical clarity and rebuilding protection so your headlights stay clear for one to two years.</p>
-            <dl class="facts reveal"><div><dt>Time</dt><dd>45 to 60 minutes</dd></div><div><dt>Lasts</dt><dd>1 to 2 years</dd></div><div><dt>Finish</dt><dd>UV sealant</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Inspection of lens condition and oxidation depth</li><li>Multi-stage wet sanding to remove yellowing, haze and pitting</li><li>Machine polishing to restore optical clarity</li><li>UV-resistant sealant to slow future oxidation</li><li>Trim and surrounding paint protected throughout</li><li>Before-and-after check of light output</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="headlights">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <header class="group-head container">
-        <p class="eyebrow">Part II</p><h2 class="display">Motorcycle</h2><p>Cruisers, sport and touring bikes · Pembroke shop</p>
-      </header>
-
-      <section class="chapter" id="motorcycle" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/blue-harley-davidson-cruiser-full-side-pembroke-garage.jpg" alt="Blue harley davidson cruiser full side garage" loading="lazy" /><span class="ch-tag">Motorcycle</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/blue-harley-davidson-cruiser-full-side-pembroke-garage.jpg" aria-label="Show photo 1"><img src="assets/cd/thumb/blue-harley-davidson-cruiser-full-side-pembroke-garage.jpg" alt="Blue harley davidson cruiser full side garage" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/blue-harley-davidson-engine-chrome-detail-pembroke-garage.jpg" aria-label="Show photo 2"><img src="assets/cd/thumb/blue-harley-davidson-engine-chrome-detail-pembroke-garage.jpg" alt="Blue harley davidson engine chrome garage" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/red-bmw-sportbike-exhaust-system-pembroke-garage.jpg" aria-label="Show photo 3"><img src="assets/cd/thumb/red-bmw-sportbike-exhaust-system-pembroke-garage.jpg" alt="Red bmw sportbike exhaust system garage" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/black-harley-cruiser-chrome-left-side-pembroke.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/black-harley-cruiser-chrome-left-side-pembroke.jpg" alt="Black harley cruiser chrome left side" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/white-sport-motorcycle-front-wheel-brake-pembroke.jpg" aria-label="Show photo 5"><img src="assets/cd/thumb/white-sport-motorcycle-front-wheel-brake-pembroke.jpg" alt="White sport motorcycle front wheel brake" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>07</span> / 09</p>
-            <h3 class="display reveal">Motorcycle Detailing</h3>
-            <p class="lead reveal">Salt air off Duxbury Beach, Route 3 road grime and summer bug splatter settle into paint, chrome and leather in ways a garden hose can’t touch.</p>
-            <p class="body reveal">Every surface gets the correct tools and products for its material: chrome is polished differently than painted bodywork, and leather seats need conditioning that plastic fairings don’t. Cruisers, sport bikes and touring models all welcome.</p>
-            <dl class="facts reveal"><div><dt>Time</dt><dd>2 to 4 hours</dd></div><div><dt>Bikes</dt><dd>Cruiser, sport, touring</dd></div><div><dt>Coating</dt><dd>1 to 2 riding seasons</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Hand wash and decontamination to remove road film and brake dust</li><li>Wheel, spoke and chrome polishing to a mirror finish</li><li>Paint correction on light swirls and oxidation</li><li>Leather and vinyl seat cleaning and conditioning</li><li>Engine and undercarriage degreasing where accessible</li><li>Motorcycle ceramic coating for long-term gloss and protection</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="motorcycle">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <header class="group-head container">
-        <p class="eyebrow">Part III</p><h2 class="display">Marine</h2><p>Mobile service · Marinas, docks, yards &amp; driveways</p>
-      </header>
-
-      <section class="chapter" id="marine" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/boat-gunwale-side-deck-sunset-pembroke-waterfront.jpg" alt="Boat gunwale side deck sunset waterfront" loading="lazy" /><span class="ch-tag">Marine</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/boat-gunwale-side-deck-sunset-pembroke-waterfront.jpg" aria-label="Show photo 1"><img src="assets/cd/thumb/boat-gunwale-side-deck-sunset-pembroke-waterfront.jpg" alt="Boat gunwale side deck sunset waterfront" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/boat-bow-hull-teal-stripe-detail-pembroke.webp" aria-label="Show photo 2"><img src="assets/cd/thumb/boat-bow-hull-teal-stripe-detail-pembroke.jpg" alt="Boat bow hull teal stripe" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/boat-helm-evinrude-display-pembroke-cabin.jpg" aria-label="Show photo 3"><img src="assets/cd/thumb/boat-helm-evinrude-display-pembroke-cabin.jpg" alt="Boat helm evinrude display cabin" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/boat-t-top-canopy-seating-pembroke-waterfront.jpg" aria-label="Show photo 4"><img src="assets/cd/thumb/boat-t-top-canopy-seating-pembroke-waterfront.jpg" alt="Boat t top canopy seating waterfront" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/twin-mercury-outboard-engines-pembroke-waterfront.jpg" aria-label="Show photo 5"><img src="assets/cd/thumb/twin-mercury-outboard-engines-pembroke-waterfront.jpg" alt="Twin mercury outboard engines waterfront" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>08</span> / 09</p>
-            <h3 class="display reveal">Marine Detailing</h3>
-            <p class="lead reveal">Professional hull cleaning, topside detailing, ceramic coatings and marine paint protection film, delivered dockside or at your storage yard. We bring the water, equipment and marine-grade products to you.</p>
-            <p class="body reveal">Salt air, open-water sun and long winters in dry storage take a toll on gelcoat, aluminium and vinyl. Regular detailing protects resale value: a hull that’s cleaned, corrected and coated on a consistent schedule holds its gelcoat far longer than one left to oxidise between haul-outs.</p>
-            <dl class="facts reveal"><div><dt>Where</dt><dd>Mobile: we come to you</dd></div><div><dt>Pricing</dt><dd>Per linear foot</dd></div><div><dt>Certified</dt><dd>XPEL Marine installer</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Hull cleaning with waterline prep, machine compound and polish</li><li>Topside detailing: fiberglass compounding, metal polishing, vinyl conditioning</li><li>Marine ceramic coating for hydrophobic shine and UV protection</li><li>XPEL Marine-grade paint protection film for high-wear areas</li><li>Hull painting and bottom paint application</li><li>Interior detailing, teak care, isinglass polishing and metal restoration</li></ul>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="marine">Get a quote</a>
-              <a href="#explorer-title" class="btn btn-outline">Open 3D boat explorer</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3D boat explorer (part of the Marine chapter) -->
-      <section class="explorer" aria-labelledby="explorer-title">
-        <div class="container">
-          <div class="explorer-head">
-            <p class="eyebrow reveal">Interactive</p>
-            <h3 class="display reveal" id="explorer-title">Build Your Boat Detail</h3>
-            <p class="lede reveal">Spin the boat, click the part you want taken care of, and build your quote.</p>
-          </div>
-          <div class="explorer-grid">
-            <div class="boat-view">
-              <div class="boat-stage" aria-label="Interactive 3D boat. Drag to rotate, click a part to choose a zone.">
-                <p class="boat-status">Loading 3D boat…</p>
-                <span class="boat-tip" hidden></span>
+          <aside class="boat-side">
+            <div class="zone-panel" aria-live="polite"></div>
+            <form class="quote-form" novalidate>
+              <h4>Your quote request</h4>
+              <ul class="quote-summary"></ul>
+              <div class="field-row">
+                <label>Boat length (ft)<input name="feet" type="number" min="5" max="150" inputmode="decimal" placeholder="e.g. 24" /></label>
+                <label class="tick"><input name="tower" type="checkbox" /> Tower or flybridge</label>
               </div>
-              <p class="boat-hint">Drag to rotate · Pinch or Ctrl + scroll to zoom · Click a part of the boat</p>
-              <div class="zone-tabs" role="tablist" aria-label="Boat zones">
-                <button class="zone-tab" role="tab" data-zone="1">Hull</button>
-                <button class="zone-tab" role="tab" data-zone="2">Topside &amp; Deck</button>
-                <button class="zone-tab" role="tab" data-zone="3">Console &amp; Interior</button>
-                <button class="zone-tab" role="tab" data-zone="4">Metal &amp; Rails</button>
-                <button class="zone-tab" role="tab" data-zone="5">Whole Boat</button>
-              </div>
-            </div>
-            <aside class="boat-side">
-              <div class="zone-panel" aria-live="polite"></div>
-              <form class="quote-form" novalidate>
-                <h4>Your quote request</h4>
-                <ul class="quote-summary"></ul>
-                <div class="field-row">
-                  <label>Boat length (ft)<input name="feet" type="number" min="5" max="150" inputmode="decimal" placeholder="e.g. 24" /></label>
-                  <label class="tick"><input name="tower" type="checkbox" /> Tower or flybridge</label>
-                </div>
-                <label>Make &amp; model<input name="boat" type="text" placeholder="e.g. 2019 Boston Whaler 230" /></label>
-                <label>Where is it kept?<input name="location" type="text" placeholder="Marina, town or driveway" /></label>
-                <label>Notes<textarea name="notes" rows="2" placeholder="Condition, timing, anything we should know"></textarea></label>
-                <label>Your name<input name="custname" type="text" autocomplete="name" /></label>
-                <p class="wrap-estimate" hidden></p>
-                <p class="pricing-note">Detailing is priced per linear foot and adjusted for condition. We'll confirm everything in your quote.</p>
-                <button type="submit" class="btn btn-dark" disabled>Request a quote</button>
-              </form>
-            </aside>
-          </div>
+              <label>Make &amp; model<input name="boat" type="text" placeholder="e.g. 2019 Boston Whaler 230" /></label>
+              <label>Where is it kept?<input name="location" type="text" placeholder="Marina, town or driveway" /></label>
+              <label>Notes<textarea name="notes" rows="2" placeholder="Condition, timing, anything we should know"></textarea></label>
+              <label>Your name<input name="custname" type="text" autocomplete="name" /></label>
+              <p class="wrap-estimate" hidden></p>
+              <p class="pricing-note">Detailing is priced per linear foot and adjusted for condition. We'll confirm everything in your quote.</p>
+              <button type="submit" class="btn btn-dark" disabled>Request a quote</button>
+            </form>
+          </aside>
         </div>
-      </section>
-
-      <section class="chapter flip" id="shrink-wrap" data-chapter>
-        <div class="container chapter-grid">
-          <div class="ch-media reveal">
-            <div class="ch-main"><img src="assets/cd/boat-shrink-wrap-storage-yard-pembroke.jpg" alt="Boat shrink wrap storage yard" loading="lazy" /><span class="ch-tag">Marine</span></div>
-            <div class="ch-thumbs"><button class="ch-thumb is-active" data-full="assets/cd/boat-shrink-wrap-storage-yard-pembroke.jpg" aria-label="Show photo 1"><img src="assets/cd/thumb/boat-shrink-wrap-storage-yard-pembroke.jpg" alt="Boat shrink wrap storage yard" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/sailboat-green-hull-white-cover-driveway-pembroke.jpg" aria-label="Show photo 2"><img src="assets/cd/thumb/sailboat-green-hull-white-cover-driveway-pembroke.jpg" alt="Sailboat green hull white cover driveway" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/sailboat-wrapped-storage-detail-pembroke-marina.jpg" aria-label="Show photo 3"><img src="assets/cd/thumb/sailboat-wrapped-storage-detail-pembroke-marina.jpg" alt="Sailboat wrapped storage marina" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/white-yacht-dry-dock-detail-pembroke-ma.webp" aria-label="Show photo 4"><img src="assets/cd/thumb/white-yacht-dry-dock-detail-pembroke-ma.jpg" alt="White yacht dry dock" loading="lazy" /></button><button class="ch-thumb" data-full="assets/cd/boat-forward-deck-covered-tender-pembroke-waterfront.jpg" aria-label="Show photo 5"><img src="assets/cd/thumb/boat-forward-deck-covered-tender-pembroke-waterfront.jpg" alt="Boat forward deck covered tender waterfront" loading="lazy" /></button></div>
-          </div>
-          <div class="ch-copy">
-            <p class="ch-num reveal"><span>09</span> / 09</p>
-            <h3 class="display reveal">Boat Shrink Wrapping</h3>
-            <p class="lead reveal">A tight, waterproof, custom-fitted seal that keeps snow, ice, moisture, debris and pests out of your cockpit and cabin from November through spring launch.</p>
-            <p class="body reveal">Every wrap is measured and fitted to your boat, not stretched from a generic template, and ventilated correctly to prevent mildew while holding firm against coastal wind gusts. Jet skis too.</p>
-            <dl class="facts reveal"><div><dt>Under 30 ft</dt><dd>$25 per foot</dd></div><div><dt>Over 30 ft / tower</dt><dd>$30 per foot</dd></div><div><dt>Book by</dt><dd>October – early November</dd></div></dl>
-            <h4 class="incl-title reveal">What’s included</h4>
-            <ul class="incl reveal"><li>Custom measurement and fitting for hulls, towers and flybridges</li><li>Marine-grade shrink film heat-sealed for a weatherproof fit</li><li>Built-in vents to control condensation and airflow</li><li>Reinforced strapping at stress points for wind and snow load</li><li>Optional zippered access door for gear retrieval</li><li>Support poles and padding to protect canvas, rails and antennas</li></ul>
-            <div class="wrap-calc">
-              <label>Estimate your wrap<input type="number" min="5" max="150" inputmode="decimal" placeholder="Boat length (ft)" /></label>
-              <label class="tick"><input type="checkbox" /> Tower or flybridge</label>
-              <p class="wrap-calc-out" aria-live="polite">Enter your boat's length for an estimate.</p>
-            </div>
-            <div class="btn-row ch-cta reveal">
-              <a href="#contact" class="btn btn-dark" data-quote="shrink-wrap">Get a quote</a>
-              <a href="tel:+17816352928" class="btn btn-outline">Call 781-635-2928</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
 
     <!-- ================= PROCESS ================= -->
     <section class="process section" id="process">
@@ -843,12 +558,12 @@
         </div>
         <div class="footer-col">
           <h4>Automotive</h4>
-          <a href="#auto-detailing">Auto Detailing</a><a href="#paint-correction">Paint Correction</a><a href="#ceramic-coating">Ceramic Coating</a>
-          <a href="#ppf">XPEL Paint Protection Film</a><a href="#window-tinting">Window Tinting</a><a href="#headlights">Headlight Restoration</a>
+          <a href="#configurator" data-cfg-open="exterior-detailing">Auto Detailing</a><a href="#configurator" data-cfg-open="paint-correction">Paint Correction</a><a href="#configurator" data-cfg-open="ceramic-coating">Ceramic Coating</a>
+          <a href="#configurator" data-cfg-open="ppf">XPEL Paint Protection Film</a><a href="#configurator" data-cfg-open="window-tinting">Window Tinting</a><a href="#configurator" data-cfg-open="headlight-restoration">Headlight Restoration</a>
         </div>
         <div class="footer-col">
           <h4>Motorcycle &amp; Marine</h4>
-          <a href="#motorcycle">Motorcycle Detailing</a><a href="#marine">Marine Detailing</a><a href="#shrink-wrap">Boat Shrink Wrapping</a><a href="#marine">3D Boat Explorer</a>
+          <a href="#motorcycle">Motorcycle Detailing</a><a href="#marine">Marine Detailing</a><a href="#marine" data-boat-zone="5">Boat Shrink Wrapping</a><a href="#marine">3D Boat Explorer</a>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
@@ -894,8 +609,8 @@
     }
   </script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="main.js"></script>
-  <script type="module" src="explorer.js"></script>
-  <script type="module" src="configurator.js"></script>
+  <script src="main.js?v=20261106b"></script>
+  <script type="module" src="explorer.js?v=20261106b"></script>
+  <script type="module" src="configurator.js?v=20261106b"></script>
 </body>
 </html>

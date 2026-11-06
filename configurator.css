@@ -203,6 +203,16 @@
 .cfg-item-img img { opacity: 0; transform: scale(1.04); transition: opacity .6s var(--ease), transform 1.2s var(--ease); }
 .cfg-item-img img.is-loaded { opacity: 1; transform: none; }
 .cfg-item-inner p { font-size: .9rem; line-height: 1.65; color: rgba(255, 255, 255, .74); }
+.cfg-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); margin: 1.1rem 0 0; border-top: 1px solid rgba(255, 255, 255, .22); border-bottom: 1px solid var(--cfg-faint); }
+.cfg-facts div { padding: .7rem .75rem .7rem 0; }
+.cfg-facts div + div { padding-left: .75rem; border-left: 1px solid var(--cfg-faint); }
+.cfg-facts dt { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: .64rem; color: rgba(255, 255, 255, .5); margin-bottom: .25rem; }
+.cfg-facts dd { font-size: .84rem; color: #fff; line-height: 1.35; }
+.cfg-incl-title { margin-top: 1.1rem; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; color: rgba(255, 255, 255, .6) !important; }
+.cfg-incl { display: grid; gap: .45rem; margin-top: .6rem; }
+.cfg-incl li { position: relative; padding-left: 1.1rem; font-size: .86rem; line-height: 1.5; color: rgba(255, 255, 255, .74); }
+.cfg-incl li::before { content: ""; position: absolute; left: 0; top: .55rem; width: .4rem; height: .4rem; border-radius: 50%; background: var(--accent); }
+.cfg-incl strong { color: #fff; font-weight: 500; }
 .cfg-item-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.25rem; margin-top: 1.1rem; }
 .cfg-add {
   display: inline-flex; align-items: center; gap: .6rem; height: 2.6rem; padding: 0 1rem;
@@ -214,9 +224,6 @@
 .cfg-add[aria-pressed="true"] { background: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 .cfg-add[aria-pressed="true"] .cfg-add-box { background: #fff; box-shadow: none; }
 .cfg-add[aria-pressed="true"] .cfg-add-box::after { content: ""; position: absolute; left: .27rem; top: .1rem; width: .25rem; height: .45rem; border: solid var(--accent); border-width: 0 2px 2px 0; transform: rotate(45deg); }
-.cfg-more { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: .8rem; color: var(--cfg-dim); border-bottom: 1px solid currentColor; padding-bottom: .1rem; transition: color .3s var(--ease); }
-.cfg-more::after { content: " →"; }
-.cfg-more:hover { color: #fff; }
 
 .cfg-foot { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1rem 1.25rem; border-top: 1px solid var(--cfg-faint); }
 .cfg-foot-note { font-size: .8rem; color: var(--cfg-dim); }

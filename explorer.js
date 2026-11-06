@@ -35,9 +35,9 @@ const ZONE_DATA = {
     ],
   },
   5: {
-    key: "whole", name: "Whole Boat", blurb: "Off-season protection for the entire vessel.",
+    key: "whole", name: "Whole Boat", blurb: "Off-season protection for the entire vessel: a tight, waterproof seal that keeps snow, ice, moisture, debris and pests out from November through spring launch. Book October to early November. Jet skis too.",
     services: [
-      { id: "wrap", name: "Boat shrink wrapping", desc: "Custom-fitted, heat-sealed marine-grade film with built-in vents and reinforced strapping." },
+      { id: "wrap", name: "Boat shrink wrapping", desc: "Measured and fitted to your boat, not stretched from a template: heat-sealed marine-grade film, built-in vents against mildew, reinforced strapping for wind and snow load, and support poles and padding to protect canvas, rails and antennas. $25/ft under 30 ft; $30/ft over 30 ft or with a tower or flybridge." },
       { id: "wrap-door", name: "Zippered access door", desc: "Add-on to the shrink wrap for gear retrieval during storage." },
     ],
   },
@@ -116,6 +116,11 @@ summary.addEventListener("click", (e) => {
   updateSummary();
 });
 tabs.forEach((t) => t.addEventListener("click", () => renderZone(+t.dataset.zone)));
+// Menu / footer links with data-boat-zone="N" jump straight to that zone (e.g. shrink wrap = 5)
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("[data-boat-zone]");
+  if (a) renderZone(+a.dataset.boatZone);
+});
 form.addEventListener("input", updateSummary);
 
 form.addEventListener("submit", (e) => {
