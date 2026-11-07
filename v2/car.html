@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Car Garage | Callahan Detail</title>
+  <meta name="description" content="Click any part of the car to see what we do to it: paint correction, XPEL ceramic coating and PPF, wheels, glass and tint, headlights and interior detailing." />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="theme-color" content="#050607" />
+  <link rel="icon" href="../assets/cd/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="v2.css?v=20261107a" />
+</head>
+<body class="garage is-loading" data-vehicle="car">
+  <div class="wipe wipe-cover" aria-hidden="true">
+    <div class="wipe-inner"><p class="wipe-kicker">Entering garage</p><p class="wipe-title">Car</p><div class="wipe-bar"><i></i></div><p class="wipe-tip"></p></div>
+  </div>
+
+  <div class="studio" aria-hidden="true"></div>
+  <div class="stage" role="img" aria-label="Interactive 3D car. Drag to rotate; click a part to see its services."></div>
+  <div class="markers"></div>
+  <div class="brk" aria-hidden="true"><i></i><i></i><i></i><i></i><span class="brk-tag"></span></div>
+  <p class="g-status" role="status" hidden></p>
+
+  <header class="bar">
+    <div class="g-nav">
+      <a class="g-back" href="index.html#services"><span aria-hidden="true">‹</span> Back <kbd>Esc</kbd></a>
+      <nav class="crumbs" aria-label="Breadcrumb">
+        <a href="index.html#services" data-wipe="Menu">Services</a><i></i><span>Car</span><i class="crumb-zone-sep" hidden></i><span class="crumb-zone" aria-current="page" hidden></span>
+      </nav>
+    </div>
+    <div class="bar-right">
+      <a class="bar-phone" href="tel:+17816352928" aria-label="Call 781-635-2928"><svg viewBox="0 0 24 24" width="15" height="15" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg><span>781-635-2928</span></a>
+      <button class="sheet-btn" type="button" data-sheet-open><span class="sheet-btn-label">Build sheet</span><span class="sheet-count" data-sheet-count>0</span></button>
+    </div>
+  </header>
+
+  <div class="g-intro">
+    <p class="kicker"><span class="kicker-num">Automotive</span> Pembroke shop</p>
+    <h1 class="mega">Car</h1>
+    <p>Paint correction, XPEL ceramic coating and paint protection film, tint, headlights and full interior detailing at our Pembroke shop.</p>
+    <p class="g-facts"><span>Where<b>Pembroke shop</b></span><span>Pricing<b>By size & condition</b></span><span>Certified<b>XPEL installer</b></span></p>
+  </div>
+  <p class="g-credit">3D car based on <a href="https://github.com/KhronosGroup/glTF-Sample-Assets/tree/main/Models/CarConcept" target="_blank" rel="noopener">“Car Concept”</a> by Eric Chadwick / Darmstadt Graphics Group, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a> (modified).</p>
+
+  <nav class="rail" aria-label="Parts"><div class="rail-row"></div></nav>
+  <p class="g-hint" aria-hidden="true">Drag to rotate · Click a part</p>
+
+  <aside class="panel" aria-label="Services for the selected part">
+    <span class="p-handle" aria-hidden="true"></span>
+    <div class="p-head">
+      <div class="p-idx">
+        <span><b class="p-n">01</b> / <span class="p-total">06</span></span>
+        <span class="p-steps"><button class="p-prev" type="button" aria-label="Previous part">‹</button><button class="p-next" type="button" aria-label="Next part">›</button></span>
+      </div>
+      <h2 class="p-title"></h2>
+      <p class="p-blurb"></p>
+    </div>
+    <div class="p-body"><ol class="p-list"></ol></div>
+    <div class="p-foot">
+      <p class="p-foot-note"></p>
+      <button class="btn btn-solid" type="button" data-sheet-open>Build sheet&nbsp;<span class="sheet-count" data-sheet-count>0</span></button>
+    </div>
+  </aside>
+
+  <footer class="prompts" aria-hidden="true">
+    <span><kbd>←</kbd><kbd>→</kbd> Switch part</span>
+    <span><kbd>Esc</kbd> Back</span>
+  </footer>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "./ui.js": "./ui.js?v=20261107a",
+      "./data.js": "./data.js?v=20261107a",
+      "./hub.js": "./hub.js?v=20261107a",
+      "./garage.js": "./garage.js?v=20261107a",
+      "./rig.js": "./rig.js?v=20261107a",
+      "./car3d.js": "./car3d.js?v=20261107a",
+      "./boat3d.js": "./boat3d.js?v=20261107a",
+      "./moto.js": "./moto.js?v=20261107a"
+    }
+  }
+  </script>
+  <script type="module" src="garage.js?v=20261107a"></script>
+</body>
+</html>
