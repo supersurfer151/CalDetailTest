@@ -221,6 +221,7 @@ function goBack() {
 $(".g-back").addEventListener("click", (e) => { e.preventDefault(); goBack(); });
 
 // Free area for the camera: below the bar, above the rail, left of the panel (or above the sheet on phones)
+let freeRect = { x0: 0, y0: 0, x1: window.innerWidth, y1: window.innerHeight };
 function updateInsets() {
   if (!viewer) return;
   const barH = $(".bar").getBoundingClientRect().height;
@@ -228,18 +229,42 @@ function updateInsets() {
   const intro = $(".g-intro").getBoundingClientRect();
   if (narrow()) {
     const sheetH = panel.getBoundingClientRect().height;
-    viewer.setInsets({ top: focus ? barH : Math.max(barH, intro.bottom + 8), right: 0, left: 0, bottom: focus ? sheetH : railH });
+    const ins = { top: focus ? barH : Math.max(barH, intro.bottom + 8), right: 0, left: 0, bottom: focus ? sheetH : railH };
+    viewer.setInsets(ins);
+    freeRect = { x0: 0, y0: ins.top, x1: window.innerWidth, y1: window.innerHeight - ins.bottom };
   } else {
     const pw = panel.getBoundingClientRect().width;
     // on mid-size screens keep the car clear of the intro text
     const left = !focus && (veh === "moto" || window.innerWidth < 1250) ? intro.right + 12 : 0;
-    viewer.setInsets({ top: barH, right: focus ? pw : 0, left, bottom: focus ? Math.min(railH, 90) : railH });
+    const ins = { top: barH, right: focus ? pw : 0, left, bottom: focus ? Math.min(railH, 90) : railH };
+    viewer.setInsets(ins);
+    freeRect = { x0: left, y0: ins.top, x1: window.innerWidth - ins.right, y1: window.innerHeight - ins.bottom };
   }
 }
 window.addEventListener("resize", () => { updateInsets(); Object.values(marks).forEach((m) => (m._w = 0)); });
 
+// ---------------- Photo portal (zones the model can't show in 3D, like the car's cabin) ----------------
+const portal = document.createElement("div");
+portal.className = "g-portal";
+portal.setAttribute("aria-hidden", "true");
+portal.innerHTML = `<img alt="" />`;
+document.body.append(portal);
+function portalRect() {
+  const f = freeRect, gx = Math.min(48, window.innerWidth * 0.04);
+  const w = Math.min(f.x1 - f.x0 - gx * 2, 860), h = Math.min(f.y1 - f.y0 - 40, w * 0.68);
+  const cx = (f.x0 + f.x1) / 2, cy = (f.y0 + f.y1) / 2;
+  return { x0: cx - w / 2, y0: cy - h / 2, x1: cx + w / 2, y1: cy + h / 2 };
+}
+
 // ---------------- Per-frame: markers + brackets ----------------
-function onFrame({ anchors, rect }) {
+function onFrame({ anchors, rect, photo }) {
+  if (focus && photo) {
+    const img = portal.firstElementChild;
+    if (img.dataset.src !== photo) { img.dataset.src = photo; img.src = photo; }
+    rect = portalRect();
+    Object.assign(portal.style, { left: rect.x0 + "px", top: rect.y0 + "px", width: rect.x1 - rect.x0 + "px", height: rect.y1 - rect.y0 + "px" });
+    portal.classList.add("is-on");
+  } else portal.classList.remove("is-on");
   const vw = window.innerWidth;
   for (const id in marks) {
     const a = anchors[id];

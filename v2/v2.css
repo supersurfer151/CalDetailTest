@@ -633,6 +633,17 @@ body[data-screen]:not([data-screen="home"]) .bg-shade { background: rgba(5,6,7,.
 .g-credit a { text-decoration: underline; }
 .is-focus .g-credit { opacity: 0; pointer-events: none; }
 
+/* Photo portal: opens over the 3D view for zones the model can't show (the car's cabin) */
+.g-portal {
+  position: fixed; z-index: 4; overflow: hidden; pointer-events: none; opacity: 0;
+  clip-path: circle(0% at 50% 50%); box-shadow: 0 0 0 2px rgba(255,255,255,.2), 0 30px 80px rgba(0,0,0,.6);
+  transition: clip-path .8s var(--ease), opacity .3s;
+}
+.g-portal.is-on { opacity: 1; clip-path: circle(75% at 50% 50%); }
+.g-portal img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.12); transition: transform 3s var(--ease); }
+.g-portal.is-on img { transform: scale(1.02); }
+.g-portal::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,6,7,.35), transparent 45%); }
+
 /* Motorcycle photo stage */
 .photo-stage { position: fixed; inset: 0; z-index: 1; overflow: hidden; }
 .photo-frame { position: absolute; left: 0; top: 0; transform-origin: 0 0; will-change: transform; }

@@ -299,6 +299,17 @@ function init(root) {
     // main.js handles the smooth scroll to #contact
   });
 
+  // ---------- Interior peek: the model has no cabin, so a round lens opens on a photo of a real one ----------
+  const peek = document.createElement("div");
+  peek.className = "cfg-peek";
+  peek.setAttribute("aria-hidden", "true");
+  peek.innerHTML = `<img src="assets/cd/cfg/porsche-interior-steering-wheel-dashboard-pembroke.jpg" alt="" loading="lazy" />`;
+  stage.appendChild(peek);
+  function placePeek(p) {
+    const a = p.interior;
+    peek.style.transform = `translate(${a.x.toFixed(1)}px, ${a.y.toFixed(1)}px)`;
+  }
+
   // ---------- Connector lines (drawn each frame from the car's projected anchor points) ----------
   function drawLines(p) {
     if (isNarrow()) return;
@@ -328,7 +339,7 @@ function init(root) {
   }
   async function startViewer() {
     if (!canUseWebGL()) { root.classList.add("no-3d"); status.hidden = true; return; }
-    const { createCarViewer } = await import("./car.js");
+    const { createCarViewer } = await import("./car.js?v=20261112b");
     viewer = createCarViewer(canvasBox, {
       reducedMotion,
       onProgress: (f) => { status.textContent = `Loading vehicle ${Math.round(f * 100)}%`; },
@@ -343,6 +354,7 @@ function init(root) {
       onClickPart: (cat) => setState(cat),
     });
     viewer.onFrame(drawLines);
+    viewer.onFrame(placePeek);
   }
 
   let visible = false;

@@ -1,13 +1,18 @@
-// 3D sports car for the "Configure Your Detail" section (configurator.js loads this lazily).
+// 3D car for the "Configure Your Detail" section (configurator.js loads this lazily).
 // Studio-lit real-time model with two emphasis effects: a light sweep across the paint (EXTERIOR)
-// and a cabin light + brighter dash display (INTERIOR). Model: assets/car/car.gltf (see license.txt there).
+// and a cabin glow (INTERIOR). Model: assets/porsche/car.gltf, a de-badged Porsche 911
+// ("(FREE) Porsche 911 Carrera 4S" by Karol Miklas, CC BY-SA 4.0, see license.txt there), built by
+// dev-tools/porsche-web/prep.js. Node names start with the part: "paint__", "wheels__", "glass__", "lights__".
+// The Callahan logo is stuck on both doors (logo-decal.js).
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
+import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
+import { addLogos } from "./logo-decal.js?v=20261112b";
 
 const LIBS = "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/";
-const MODEL_URL = "assets/car/car.gltf";
+const MODEL_URL = "assets/porsche/car.gltf";
 
 // Camera presets. az = angle around the car (0 = straight at the nose, + = toward the driver's side),
 // el = height angle, dist = multiplier on the fitted distance, look = where the camera aims (fractions of car size),
@@ -111,13 +116,9 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
   let ready = false;
   let pickables = [];
 
+  // Clicking the windows means "inside"; everything else is the exterior
   function partCategory(obj) {
-    for (let o = obj; o; o = o.parent) {
-      const n = o.name || "";
-      if (/^Interior/.test(n) || /Windshield$|Window$|Rearwindow|WindowsRear/.test(n)) return "interior";
-      if (/^(Body|Wheel)/.test(n)) return "exterior";
-    }
-    return "exterior";
+    return /^glass__/.test(obj.name || "") ? "interior" : "exterior";
   }
 
   function patchPaint(mat) {
@@ -141,7 +142,7 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
   // ---------- Load ----------
   const draco = new DRACOLoader().setDecoderPath(LIBS + "draco/gltf/");
   const ktx2 = new KTX2Loader().setTranscoderPath(LIBS + "basis/").detectSupport(renderer);
-  const loader = new GLTFLoader().setDRACOLoader(draco).setKTX2Loader(ktx2);
+  const loader = new GLTFLoader().setDRACOLoader(draco).setKTX2Loader(ktx2).setMeshoptDecoder(MeshoptDecoder);
   loader.load(MODEL_URL, (gltf) => {
     const model = gltf.scene;
     const plate = model.getObjectByName("License Plate");
@@ -155,7 +156,7 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
       pickables.push(o);
       const mats = Array.isArray(o.material) ? o.material : [o.material];
       mats.forEach((m) => {
-        if (/^Paint/.test(m.name)) paintMats.add(m);
+        if (/^paint$/i.test(m.name)) paintMats.add(m);
         if (m.name === "Dashboard") dashMat = m;
       });
     });
@@ -172,13 +173,24 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
     const dims = b.getSize(new THREE.Vector3());
     size = { L: dims.z, H: dims.y, W: dims.x, R: b.getBoundingSphere(new THREE.Sphere()).radius };
 
-    // Anchor points the connector lines attach to: the front of the hood, and the steering wheel (driver's seat)
-    const hood = model.getObjectByName("BodyHood");
-    const hb = hood ? new THREE.Box3().setFromObject(hood) : b;
-    anchors.exterior = new THREE.Vector3(size.W * 0.12, hb.max.y - (hb.max.y - hb.min.y) * 0.18, hb.max.z - (hb.max.z - hb.min.z) * 0.32);
-    const seat = model.getObjectByName("InteriorSteeringWheel01") || model.getObjectByName("InteriorSeatsColor1");
-    anchors.interior = seat ? new THREE.Box3().setFromObject(seat).getCenter(new THREE.Vector3()) : new THREE.Vector3(size.W * 0.2, size.H * 0.6, 0);
+    // Anchor points the connector lines attach to: a spot on the hood (found by dropping a ray onto the paint),
+    // and the middle of the cabin seen through the glass
+    const paintMeshes = [], glassMeshes = [];
+    model.traverse((o) => { if (o.isMesh) (/^glass__/.test(o.name) ? glassMeshes : /^paint__/.test(o.name) ? paintMeshes : []).push(o); });
+    const drop = new THREE.Raycaster(new THREE.Vector3(size.W * 0.12, size.H * 3, b.max.z - size.L * 0.2), new THREE.Vector3(0, -1, 0));
+    const hoodHit = drop.intersectObjects(paintMeshes, false)[0];
+    anchors.exterior = hoodHit ? hoodHit.point.clone() : new THREE.Vector3(size.W * 0.12, size.H * 0.6, size.L * 0.3);
+    const gb = new THREE.Box3(); glassMeshes.forEach((g) => gb.expandByObject(g));
+    const gc = gb.isEmpty() ? new THREE.Vector3(0, size.H * 0.7, 0) : gb.getCenter(new THREE.Vector3());
+    anchors.interior = new THREE.Vector3(size.W * 0.18, gb.isEmpty() ? size.H * 0.7 : gb.min.y + (gb.max.y - gb.min.y) * 0.45, gc.z + size.L * 0.04);
     cabinLight.position.set(anchors.interior.x * 0.4, size.H * 0.62, anchors.interior.z - size.L * 0.08);
+
+    // the Callahan logo on both doors
+    const doorY = size.H * 0.43, doorZ = -size.L * 0.02;
+    addLogos(scene, paintMeshes, [
+      { from: new THREE.Vector3(size.W * 3, doorY, doorZ), to: new THREE.Vector3(0, doorY, doorZ), size: size.H * 0.3 },
+      { from: new THREE.Vector3(-size.W * 3, doorY, doorZ), to: new THREE.Vector3(0, doorY, doorZ), size: size.H * 0.3 },
+    ], { url: "assets/cd/logo-hd.png" }).catch((e) => console.warn("logo", e));
 
     const blob = shadowBlob();
     blob.rotation.x = -Math.PI / 2;

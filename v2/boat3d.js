@@ -5,6 +5,7 @@
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { addLogos } from "../logo-decal.js";
 
 const URL = "../assets/grady/boat.gltf";
 const IDS = [null, "hull", "topside", "console", "metal"];   // _zone number → zone id
@@ -32,11 +33,11 @@ export function loadBoat(rig, { onProgress, reducedMotion } = {}) {
   manager.onProgress = (_u, loaded, total) => onProgress?.(loaded / total);
   return new Promise((resolve, reject) => {
     new GLTFLoader(manager).load(URL, (gltf) => {
-      try { resolve(build(gltf)); } catch (e) { reject(e); }
+      build(gltf).then(resolve, reject);
     }, undefined, reject);
   });
 
-  function build(gltf) {
+  async function build(gltf) {
     const root = gltf.scene;
     root.updateMatrixWorld(true);
     const b0 = new THREE.Box3().setFromObject(root);
@@ -152,6 +153,13 @@ export function loadBoat(rig, { onProgress, reducedMotion } = {}) {
       },
     };
 
+    // the Callahan logo on both sides of the hull, up near the bow
+    const logoY = hullB.min.y + (hullB.max.y - hullB.min.y) * 0.66, logoZ = BOW * L * 0.2;
+    const logos = await addLogos(scene, pickables, [
+      { from: V3(L, logoY, logoZ), to: V3(0, logoY, logoZ), size: H * 0.24 },
+      { from: V3(-L, logoY, logoZ), to: V3(0, logoY, logoZ), size: H * 0.24 },
+    ], { url: "../assets/cd/logo-hd.png" });
+
     const amt = { hi: [0, 0, 0, 0, 0], dim: [0, 0, 0, 0, 0], wrap: 0 };
     return {
       fov: 28,
@@ -178,6 +186,7 @@ export function loadBoat(rig, { onProgress, reducedMotion } = {}) {
         }
         amt.wrap += ((focus === "whole" ? 1 : 0) - amt.wrap) * (1 - Math.exp(-dt * 2.5));
         U.uWrap.value = amt.wrap;
+        logos.forEach((d) => { d.material.color.setScalar(1 - 0.55 * amt.dim[1]); d.material.opacity = 0.96 * (1 - amt.wrap); });
       },
     };
   }

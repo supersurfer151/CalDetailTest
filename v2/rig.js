@@ -197,6 +197,7 @@ export function createRig(container, { reducedMotion, onHover, onPick, onFrame }
     // screen rectangle of the focused part (for the targeting brackets)
     out.rect = null;
     const fz = focusId && model.zones[focusId];
+    out.photo = fz?.photo && tweenT > 0.6 ? fz.photo : null;   // zones without 3D detail can open a photo instead
     if (fz?.box && tweenT > 0.6) {
       const b = fz.rectBox || fz.box;
       let i = 0;
