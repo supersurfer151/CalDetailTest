@@ -1,12 +1,12 @@
 // 3D boat for the boat garage. Every vertex of ../assets/boat/boat.gltf carries a baked "_zone" number
 // (1 hull, 2 topside & deck, 3 console & interior, 4 metal & T-top), so clicks and highlights line up
 // exactly with the parts. "Shrink wrap" covers the whole boat.
-// Model: "2004 17' Scout - Center Console" by BoatUS Foundation, CC BY 4.0 (see ../assets/boat/license.txt).
+// Model: "Freedom 325 Grady White" by BoatUS Foundation, CC BY 4.0 (see ../assets/grady/license.txt).
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
-const URL = "../assets/boat/boat.gltf";
+const URL = "../assets/grady/boat.gltf";
 const IDS = [null, "hull", "topside", "console", "metal"];   // _zone number → zone id
 const BOW = 1;  // +1 if the bow points toward +z, -1 if toward -z
 

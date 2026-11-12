@@ -156,7 +156,7 @@ async function startViewer() {
     return;
   }
   status.textContent = "Loading 3D boat…";
-  const { createBoatViewer, ZONES } = await import("./boat.js");
+  const { createBoatViewer, ZONES } = await import("./boat.js?v=20261112a");
   viewer = createBoatViewer(stage, {
     onProgress: (p) => (status.textContent = `Loading 3D boat… ${Math.round(p * 100)}%`),
     onReady: () => { status.hidden = true; stage.classList.add("is-ready"); viewer.select(current); },

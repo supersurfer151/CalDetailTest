@@ -1,0 +1,11 @@
+Model Information:
+* title:	Freedom 325 Grady White
+* source:	https://sketchfab.com/3d-models/freedom-325-grady-white-71ca8a73f97d44a98f92dd785e151b93
+* author:	BoatUS Foundation (https://sketchfab.com/boatusfoundation)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Freedom 325 Grady White" (https://sketchfab.com/3d-models/freedom-325-grady-white-71ca8a73f97d44a98f92dd785e151b93) by BoatUS Foundation (https://sketchfab.com/boatusfoundation) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

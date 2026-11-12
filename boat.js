@@ -6,7 +6,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 
 export const ZONES = { NONE: 0, HULL: 1, TOPSIDE: 2, CONSOLE: 3, METAL: 4, WHOLE: 5 };
 
-// Each vertex carries a baked "_zone" attribute (see assets/boat/boat.gltf), so clicks and highlights agree exactly
+// Each vertex carries a baked "_zone" attribute (see assets/grady/boat.gltf, built by dev-tools/boat2/prep.js), so clicks and highlights agree exactly
 const GLSL_ZONE = /* glsl */ `
   uniform int uHover;
   uniform int uSelected;
@@ -93,7 +93,7 @@ export function createBoatViewer(container, { onZoneClick, onHover, onProgress, 
 
   const manager = new THREE.LoadingManager();
   manager.onProgress = (_url, loaded, total) => onProgress && onProgress(loaded / total);
-  new GLTFLoader(manager).load("assets/boat/boat.gltf", (gltf) => {
+  new GLTFLoader(manager).load("assets/grady/boat.gltf", (gltf) => {
     const model = gltf.scene;
     model.traverse((o) => {
       if (!o.isMesh) return;
