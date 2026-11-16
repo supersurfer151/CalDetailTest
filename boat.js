@@ -3,7 +3,6 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import { addLogos } from "./logo-decal.js?v=20261112b";
 
 export const ZONES = { NONE: 0, HULL: 1, TOPSIDE: 2, CONSOLE: 3, METAL: 4, WHOLE: 5 };
 
@@ -106,14 +105,6 @@ export function createBoatViewer(container, { onZoneClick, onHover, onProgress, 
     const c = box.getCenter(new THREE.Vector3());
     model.position.set(-c.x, -box.min.y - 0.35, -c.z);
     scene.add(model);
-    // the Callahan logo on both sides of the hull, up near the bow
-    model.updateMatrixWorld(true);
-    const b2 = new THREE.Box3().setFromObject(model), sz = b2.getSize(new THREE.Vector3());
-    const ly = b2.min.y + sz.y * 0.37, lz = b2.max.z - sz.z * 0.29;
-    addLogos(scene, pickables, [
-      { from: new THREE.Vector3(sz.z, ly, lz), to: new THREE.Vector3(0, ly, lz), size: sz.y * 0.24 },
-      { from: new THREE.Vector3(-sz.z, ly, lz), to: new THREE.Vector3(0, ly, lz), size: sz.y * 0.24 },
-    ], { url: "assets/cd/logo-hd.png" }).catch((e) => console.warn("logo", e));
     onReady && onReady();
   });
 

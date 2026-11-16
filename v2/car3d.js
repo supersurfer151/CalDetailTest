@@ -1,15 +1,13 @@
 // 3D car for the car garage: a Porsche 911, de-badged and repainted (../assets/porsche/car.gltf, built by
 // dev-tools/porsche-web/prep.js). Node names carry the service zone ("paint__…", "wheels__…", "glass__…",
-// "lights__…"); this file gives each zone a camera shot, a marker and its own highlight, and puts the
-// Callahan logo on both doors. The model has no cabin, so the interior zone opens a photo of a real one.
+// "lights__…"); this file gives each zone a camera shot, a marker and its own highlight.
+// The model has no cabin, so the interior zone opens a photo of a real one.
 // Model: "(FREE) Porsche 911 Carrera 4S" by Karol Miklas, CC BY-SA 4.0 (see ../assets/porsche/license.txt).
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
-import { addLogos } from "../logo-decal.js";
 
 const URL = "../assets/porsche/car.gltf";
-const LOGO = "../assets/cd/logo-hd.png";
 const INTERIOR_PHOTO = "../assets/cd/cfg/porsche-interior-steering-wheel-dashboard-pembroke.jpg";
 
 // Dark studio with long softboxes for clean strip reflections on the paint
@@ -206,13 +204,6 @@ export function loadCar(rig, { onProgress, reducedMotion } = {}) {
     const sideWin = boxOf(meshesBy.glass, (v) => v.x > W * 0.3);
     const sideC = sideWin.getCenter(V3());
 
-    // ---- the Callahan logo on both doors ----
-    const doorY = H * 0.43, doorZ = -L * 0.02;
-    const logos = await addLogos(scene, meshesBy.paint, [
-      { from: V3(W * 3, doorY, doorZ), to: V3(0, doorY, doorZ), size: H * 0.3 },
-      { from: V3(-W * 3, doorY, doorZ), to: V3(0, doorY, doorZ), size: H * 0.3 },
-    ], { url: LOGO });
-
     const zones = {
       paint: {
         view: { look: V3(W * 0.2, H * 0.42, L * 0.1), az: 0.66, el: 0.22, R: L * 0.4, fov: 26, mirror: true },
@@ -265,6 +256,7 @@ export function loadCar(rig, { onProgress, reducedMotion } = {}) {
       portraitR: 0.74,
       zones, pickables,
       zoneOf(hit) { return hit.object.userData.zone || undefined; },
+      shine() { startSweep(); },   // a light sweep across the paint (choosing the Ultimate Detail's buff wax)
       update(dt, { hover, focus }) {
         if (focus !== fx.lastFocus) { if (focus === "paint" || focus === "full") startSweep(); fx.lastFocus = focus; }
         if (hover !== fx.lastHover) { if (hover === "paint" && focus !== "paint") startSweep(); fx.lastHover = hover; }
@@ -280,8 +272,6 @@ export function loadCar(rig, { onProgress, reducedMotion } = {}) {
           U[z].uHi.value = a.hi;
           U[z].uDim.value = a.dim;
         }
-        const ld = 1 - 0.6 * amt.paint.dim;
-        logos.forEach((d) => d.material.color.setScalar(ld));
         if (fx.sweepT < 1) {
           fx.sweepT = Math.min(1, fx.sweepT + dt / 1.3);
           const p = fx.sweepT < 0.5 ? 4 * fx.sweepT ** 3 : 1 - Math.pow(-2 * fx.sweepT + 2, 3) / 2;

@@ -4,8 +4,11 @@
 //   SERVICES[id]  name, short (one line), desc (2–3 sentences), img, optional facts [[label, value]], incl [bullets]
 //   VEHICLES      each vehicle's parts ("zones"); a zone lists the service ids shown when you click that part.
 //                 The same service can appear on more than one part (e.g. ceramic coating on hull and topside).
+//
+// Car packages and add-ons live in ../packages.js (shared with the main site) and are merged in below.
+import { PACKAGES, ADDONS, MORE, ITEMS } from "../packages.js";
 
-const CFG = "../assets/cd/cfg/";
+const CD = "../assets/cd/";
 const TH = "../assets/cd/thumb/";
 
 export const CONTACT = {
@@ -20,103 +23,7 @@ export const CONTACT = {
 };
 
 export const SERVICES = {
-  // ---------------- Car: paint ----------------
-  "exterior-detailing": {
-    name: "Exterior Detailing", short: "Hand wash, decontamination & sealant", img: CFG + "audi-rs7-covered-soap-wash-driveway-pembroke.jpg",
-    desc: "A careful hand wash followed by clay bar and chemical decontamination to lift bonded dirt, tar and rail dust, then a one-step polish and sealant for gloss and protection. Wheels, tires, glass and door jambs included.",
-    facts: [["Where", "Pembroke shop"], ["Vehicles", "Cars, trucks, SUVs, vans"], ["Pricing", "By size & condition"]],
-    incl: ["Every job starts with an inspection so the process matches your car’s condition", "Clay bar and chemical decontamination for tar, bonded dirt and rail dust", "One-step polish and sealant for gloss and protection"],
-  },
-  "paint-correction": {
-    name: "Paint Correction", short: "Remove swirls, scratches & oxidation", img: CFG + "orbital-polisher-paint-correction-pembroke-detailing.jpg",
-    desc: "Multi-stage machine polishing that removes swirl marks, light scratches, water spots and oxidation. Every panel is inspected under LED lighting and corrected individually to restore deep gloss and colour clarity.",
-    facts: [["Time", "Half day to 2 days"], ["Stages", "Single or multi-stage"], ["Best before", "Ceramic or PPF"]],
-    incl: ["Wash, clay bar and chemical decontamination to lift bonded dirt, tar and rail dust", "Panel-by-panel inspection under LED lighting to map a correction plan", "Dual-action or rotary polishing matched to your paint’s hardness", "Removes swirl marks, spider webbing, water spots and light oxidation", "Restores deep gloss and colour clarity, especially on darker paint", "Creates a true surface for ceramic coating or paint protection film", "Deep scratches through the clear coat may reduce but not fully disappear; we’ll tell you up front"],
-  },
-  "ceramic-coating": {
-    name: "Ceramic Coating", short: "XPEL Fusion, bonded to your paint", img: CFG + "yellow-corvette-detail-shop-pembroke.jpg",
-    desc: "A liquid polymer that chemically bonds to your paint, forming a hard, glass-like layer that stays put season after season. We install XPEL Fusion after thorough prep, which is what makes a coating last years instead of months.",
-    facts: [["Product", "XPEL Fusion"], ["Time", "1 to 3 days by tier"], ["For", "Cars, bikes & boats"]],
-    incl: ["<strong>Tier 1:</strong> exterior-only coating, typically a full day", "<strong>Tiers 2 & 3:</strong> add paint correction, interior coating and wheel removal, two to three days", "Full exterior coating on paint, wheels, glass, plastic trim and door jambs", "Interior surface coating for added stain and UV resistance", "Engine bay detailing and coating", "Pairs with XPEL PPF on high-impact areas for maximum protection"],
-  },
-  ppf: {
-    name: "Paint Protection Film", short: "Self-healing XPEL film against chips", img: CFG + "paint-protection-film-blue-car-pembroke.jpg",
-    desc: "Genuine XPEL film, precision-cut for your make and model: a clear, self-healing barrier against rock chips, road salt, bug splatter and fine scratches. Protect high-impact areas like the hood, bumper and mirrors, or the full body.",
-    facts: [["Film", "Genuine XPEL"], ["Time", "1 to 2 days full body"], ["Finish", "Self-healing, invisible"]],
-    incl: ["Paint inspection and correction before film goes on", "Precision-cut patterns for your make and model", "Coverage for high-impact zones: hoods, bumpers, mirrors and rocker panels", "Self-healing topcoat that removes light scratches with heat", "UV and stain resistance that keeps paint from fading or yellowing", "Optional pairing with ceramic coating for gloss and easier washing"],
-  },
-  // ---------------- Car: wheels ----------------
-  "wheels-off": {
-    name: "Wheels-Off Cleaning", short: "Faces, barrels, calipers & wells", img: CFG + "mercedes-wheel-tire-detail-pembroke-detailing.jpg",
-    desc: "The wheels come off so faces, inner barrels, calipers and wheel wells can be cleaned and decontaminated properly, lifting baked-on brake dust and road grime that a brush can’t reach with the wheel on the car.",
-    incl: ["Wheel faces and inner barrels cleaned and decontaminated", "Calipers and wheel wells cleaned while the wheel is off", "Baked-on brake dust and road salt removed", "Wheels refitted and torqued back to spec"],
-  },
-  "wheel-ceramic": {
-    name: "Wheel Ceramic Coating", short: "Brake dust & grime release easily", img: CFG + "gray-sedan-custom-wheel-red-caliper-pembroke.jpg",
-    desc: "XPEL Fusion ceramic applied to clean, decontaminated wheels. The coating resists brake dust and road salt, so wheels stay cleaner longer and wash up in minutes. Higher coating tiers include wheel removal for full coverage.",
-    facts: [["Product", "XPEL Fusion"], ["Part of", "Ceramic coating tiers"]],
-  },
-  "tire-shine": {
-    name: "Tire Shine", short: "A clean, even satin finish", img: CFG + "black-pickup-truck-wheel-tire-detail-pembroke.jpg",
-    desc: "Tires scrubbed clean of old dressing and browning, then finished with a dressing for a rich, even look that isn’t greasy and won’t sling onto your paint.",
-  },
-  // ---------------- Car: glass & lights ----------------
-  "exterior-glass": {
-    name: "Exterior Window Cleaning", short: "Streak-free, crystal-clear glass", img: CFG + "windshield-glass-detailing-pembroke-ma.jpg",
-    desc: "Windshield, windows and mirrors cleaned streak-free, with water spots and bonded film lifted so visibility is crisp in sun, rain and night driving.",
-  },
-  "window-tinting": {
-    name: "Window Tinting", short: "Heat, glare & UV rejection", img: CFG + "2023-Tesla-Model-Y-Grey-Black-HTX-XRP-WC-19-png.jpg",
-    desc: "Optically clear film that blocks a significant portion of solar heat and UV, cuts glare and adds privacy. Fade-resistant film with a bubble-free finish, and guidance on shades that are legal on Massachusetts roads.",
-    facts: [["Time", "2 to 4 hours"], ["Cure", "3 to 5 days before rolling down"], ["Where", "Pembroke shop"]],
-    incl: ["Significant UV and heat rejection to protect skin and interior surfaces", "Reduced glare for safer, more comfortable driving", "Added privacy and security for your vehicle’s contents", "Bubble-free finish with properly trimmed edges", "Fade-resistant film that won’t turn purple after a few summers", "Massachusetts-legal shade guidance"],
-  },
-  "headlight-restoration": {
-    name: "Headlight Restoration", short: "Clear, bright lenses in about an hour", img: CFG + "black-ram-pickup-front-angle-headlight-pembroke.jpg",
-    desc: "Wet sanding removes yellowing, haze and pitting, machine polishing restores optical clarity, and a UV-resistant sealant keeps lenses clear for one to two years.",
-    facts: [["Time", "45 to 60 minutes"], ["Lasts", "1 to 2 years"], ["Finish", "UV sealant"]],
-    incl: ["Inspection of lens condition and oxidation depth", "Multi-stage wet sanding to remove yellowing, haze and pitting", "Machine polishing to restore optical clarity", "UV-resistant sealant to slow future oxidation", "Trim and surrounding paint protected throughout", "Before-and-after check of light output"],
-  },
-  // ---------------- Car: interior ----------------
-  "interior-detailing": {
-    name: "Interior Detailing", short: "Complete cabin clean & condition", img: CFG + "mercedes-amg-interior-dashboard-blue-ambient-pembroke.jpg",
-    desc: "A full interior detail: every surface cleaned and conditioned, carpets and fabric steam-cleaned and shampooed, and interior glass left streak-free. The interior half of our Complete Detail package.",
-    facts: [["Where", "Pembroke shop"], ["Part of", "Complete & Ultimate Detail"], ["Pricing", "By size & condition"]],
-  },
-  "deep-interior": {
-    name: "Deep Interior Cleaning", short: "For heavy soiling, pet hair & stains", img: CFG + "car-door-open-detailing-bay-pembroke.jpg",
-    desc: "For cabins that need more than a refresh: heavy soiling, pet hair, spills and set-in stains get the extra time, steam and extraction they need. We look over the condition with you before we start.",
-  },
-  leather: {
-    name: "Leather Cleaning & Conditioning", short: "Clean, supple, protected leather", img: CFG + "porsche-interior-steering-wheel-dashboard-pembroke.jpg",
-    desc: "Leather seats and trim gently cleaned to lift body oils and grime from the grain, then conditioned to keep them soft and help prevent cracking and fading.",
-  },
-  "carpet-upholstery": {
-    name: "Carpet & Upholstery Cleaning", short: "Steam-cleaned & shampooed", img: CFG + "blue-ford-explorer-open-doors-garage-pembroke.jpg",
-    desc: "Carpets, floor mats and fabric seats steam-cleaned and shampooed to pull out ground-in dirt, road-salt stains and odors that South Shore winters leave behind.",
-  },
-  "interior-protection": {
-    name: "Interior Protection", short: "Stain & UV resistance for the cabin", img: CFG + "mercedes-steering-wheel-dashboard-display-pembroke.jpg",
-    desc: "A protective interior coating that adds stain and UV resistance to seats, carpets and trim, so spills wipe up easily and surfaces don’t fade. Included in our higher ceramic coating tiers.",
-    facts: [["Part of", "Higher ceramic tiers"], ["Protects", "Seats, carpet & trim"]],
-  },
-  // ---------------- Car: packages ----------------
-  "complete-detail": {
-    name: "Complete Detail Package", short: "Inside and out in a few hours", img: TH + "white-camaro-zl1-front-garage-pembroke-detailing.jpg",
-    desc: "Our full inside-and-out detail: interior cleaning and conditioning, steam-cleaned and shampooed carpet and fabric, a decontamination wash, one-step polish and sealant, plus wheels, tires, glass and door jambs.",
-    facts: [["Time", "A few hours"], ["Where", "Pembroke shop"], ["Pricing", "By size & condition"]],
-    incl: ["Interior cleaning and conditioning", "Steam-cleaned and shampooed carpet and fabric", "Decontamination wash", "One-step polish and sealant", "Wheels, tires, glass and door jambs"],
-  },
-  "ultimate-detail": {
-    name: "Ultimate Detail Package", short: "Complete + 3-step correction & ceramic sealant", img: TH + "black-porsche-911-garage-driveway-pembroke.jpg",
-    desc: "Everything in the Complete Detail, plus engine bay cleaning, full three-step paint correction and a six-month ceramic spray sealant. It takes longer than the Complete; we’ll give you a time estimate at drop-off.",
-    facts: [["Correction", "Full three-step"], ["Sealant", "6-month ceramic spray"], ["Time", "Estimated at drop-off"]],
-    incl: ["Everything in the Complete Detail Package", "Engine bay cleaning", "Full three-step paint correction", "Six-month ceramic spray sealant"],
-  },
-  maintenance: {
-    name: "Monthly Maintenance", short: "Keep it freshly detailed year-round", img: TH + "white-volvo-suv-three-quarter-angle-pembroke-wash.jpg",
-    desc: "Monthly maintenance packages that keep your vehicle freshly detailed all year, so the finish never slides back to where it started.",
-  },
+  // ---------------- Car: packages, add-ons and more services come from ../packages.js (see CAR below) ----------------
 
   // ---------------- Boat ----------------
   "hull-clean": {
@@ -211,18 +118,30 @@ export const SERVICES = {
   },
 };
 
+// Car packages, add-ons and more services from ../packages.js, in the same shape as the rest
+for (const p of PACKAGES) {
+  SERVICES["pkg-" + p.id] = { kind: "package", pkg: p.id, name: p.full, short: p.line };
+}
+for (const a of ADDONS) SERVICES[a.id] = { ...a, kind: "addon", img: a.img && CD + a.img };
+for (const m of MORE) SERVICES[m.id] = { ...m, kind: "more", img: m.img && CD + m.img };
+function zoneServices(zone) {
+  return [...ADDONS, ...MORE].filter((s) => s.zone === zone).map((s) => s.id);
+}
+export { PACKAGES, ITEMS };
+
 export const VEHICLES = {
   car: {
     name: "Car", label: "Automotive", where: "Pembroke shop", page: "car.html",
-    intro: "Paint correction, XPEL ceramic coating and paint protection film, tint, headlights and full interior detailing at our Pembroke shop.",
-    tips: ["Paint correction before ceramic or PPF is what makes protection last years instead of months.", "Wait 3 to 5 days before rolling down freshly tinted windows.", "Many owners pair XPEL film on the front end with ceramic coating everywhere else."],
+    intro: "Three detail packages, plus ceramic coating, XPEL paint protection film and interior add-ons, at our Pembroke shop.",
+    tips: ["The buff wax in our Ultimate Detail is a light paint correction: it lifts fine swirls and brings back the gloss.", "Add-ons work with any package, or on their own.", "Many owners pair XPEL film on the front end with ceramic coating everywhere else."],
+    packages: PACKAGES.map((p) => p.id),
     zones: [
-      { id: "paint", name: "Paint", blurb: "Wash, correct and protect the finish everyone sees first.", services: ["exterior-detailing", "paint-correction", "ceramic-coating", "ppf"] },
-      { id: "wheels", name: "Wheels & Tires", blurb: "Brake dust, road salt and grime, gone from faces, barrels and calipers.", services: ["wheels-off", "wheel-ceramic", "tire-shine"] },
-      { id: "glass", name: "Glass", blurb: "Crystal-clear glass, plus tint that cuts heat, glare and UV.", services: ["exterior-glass", "window-tinting"] },
-      { id: "lights", name: "Headlights", blurb: "Yellowed, hazy lenses made clear and bright again.", services: ["headlight-restoration"] },
-      { id: "interior", name: "Interior", blurb: "Seats, carpets and every surface you touch each time you drive.", services: ["interior-detailing", "deep-interior", "leather", "carpet-upholstery", "interior-protection"] },
-      { id: "full", name: "Full Car", blurb: "Packages that take care of everything, inside and out.", services: ["complete-detail", "ultimate-detail", "ceramic-coating", "ppf", "maintenance"] },
+      { id: "paint", name: "Paint", blurb: "Wash, polish and protect the finish everyone sees first.", services: zoneServices("paint") },
+      { id: "wheels", name: "Wheels & Tires", blurb: "Brake dust, road salt and grime, gone from faces, barrels and tires.", services: zoneServices("wheels") },
+      { id: "glass", name: "Glass", blurb: "Clear glass inside and out, plus tint that cuts heat, glare and UV.", services: zoneServices("glass") },
+      { id: "lights", name: "Headlights", blurb: "Yellowed, hazy lenses made clear and bright again.", services: zoneServices("lights") },
+      { id: "interior", name: "Interior", blurb: "Seats, carpets and every surface you touch each time you drive.", services: zoneServices("interior") },
+      { id: "full", name: "Packages", blurb: "Pick a package, then add any extras.", services: zoneServices("full") },
     ],
   },
   boat: {

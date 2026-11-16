@@ -4,14 +4,14 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Car Garage | Callahan Detail</title>
-  <meta name="description" content="Click any part of the car to see what we do to it: paint correction, XPEL ceramic coating and PPF, wheels, glass and tint, headlights and interior detailing." />
+  <meta name="description" content="Choose a Basic, Premium or Ultimate car detail and add ceramic coating, XPEL paint protection film or interior extras. Click any part of the car to see what we do to it." />
   <meta name="robots" content="noindex, nofollow" />
   <meta name="theme-color" content="#050607" />
   <link rel="icon" href="../assets/cd/logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="v2.css?v=20261112b" />
+  <link rel="stylesheet" href="v2.css?v=20261112c" />
 </head>
 <body class="garage is-loading" data-vehicle="car">
   <div class="wipe wipe-cover" aria-hidden="true">
@@ -40,7 +40,7 @@
   <div class="g-intro">
     <p class="kicker"><span class="kicker-num">Automotive</span> Pembroke shop</p>
     <h1 class="mega">Car</h1>
-    <p>Paint correction, XPEL ceramic coating and paint protection film, tint, headlights and full interior detailing at our Pembroke shop.</p>
+    <p>Three detail packages, plus ceramic coating, XPEL paint protection film and interior add-ons, at our Pembroke shop.</p>
     <p class="g-facts"><span>Where<b>Pembroke shop</b></span><span>Pricing<b>By size & condition</b></span><span>Certified<b>XPEL installer</b></span></p>
   </div>
   <p class="g-credit">3D car based on <a href="https://sketchfab.com/3d-models/free-porsche-911-carrera-4s-d01b254483794de3819786d93e0e1ebf" target="_blank" rel="noopener">“(FREE) Porsche 911 Carrera 4S”</a> by <a href="https://sketchfab.com/karolmiklas" target="_blank" rel="noopener">Karol Miklas</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a> (modified: badges removed, repainted).</p>
@@ -48,20 +48,22 @@
   <nav class="rail" aria-label="Parts"><div class="rail-row"></div></nav>
   <p class="g-hint" aria-hidden="true">Drag to rotate · Click a part</p>
 
-  <aside class="panel" aria-label="Services for the selected part">
+  <aside class="panel" aria-label="Detail packages and services">
     <span class="p-handle" aria-hidden="true"></span>
     <div class="p-head">
       <div class="p-idx">
-        <span><b class="p-n">01</b> / <span class="p-total">06</span></span>
+        <button class="p-up" type="button" hidden><span aria-hidden="true">‹</span> Packages</button>
+        <span class="p-kick" hidden></span>
+        <span class="p-count"><b class="p-n">01</b> / <span class="p-total">06</span></span>
         <span class="p-steps"><button class="p-prev" type="button" aria-label="Previous part">‹</button><button class="p-next" type="button" aria-label="Next part">›</button></span>
       </div>
       <h2 class="p-title"></h2>
       <p class="p-blurb"></p>
     </div>
-    <div class="p-body"><ol class="p-list"></ol></div>
+    <div class="p-body"><div class="p-content"></div></div>
     <div class="p-foot">
       <p class="p-foot-note"></p>
-      <button class="btn btn-solid" type="button" data-sheet-open>Build sheet&nbsp;<span class="sheet-count" data-sheet-count>0</span></button>
+      <button class="btn btn-solid" type="button" data-sheet-open>Request quote&nbsp;<span class="sheet-count" data-sheet-count>0</span></button>
     </div>
   </aside>
 
@@ -75,18 +77,18 @@
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
-      "./ui.js": "./ui.js?v=20261112b",
-      "./data.js": "./data.js?v=20261112b",
-      "./hub.js": "./hub.js?v=20261112b",
-      "./garage.js": "./garage.js?v=20261112b",
-      "./rig.js": "./rig.js?v=20261112b",
-      "./car3d.js": "./car3d.js?v=20261112b",
-      "./boat3d.js": "./boat3d.js?v=20261112b",
-      "./moto.js": "./moto.js?v=20261112b",
-      "../logo-decal.js": "../logo-decal.js?v=20261112b"
+      "./ui.js": "./ui.js?v=20261112c",
+      "./data.js": "./data.js?v=20261112c",
+      "./hub.js": "./hub.js?v=20261112c",
+      "./garage.js": "./garage.js?v=20261112c",
+      "./rig.js": "./rig.js?v=20261112c",
+      "./car3d.js": "./car3d.js?v=20261112c",
+      "./boat3d.js": "./boat3d.js?v=20261112c",
+      "./moto.js": "./moto.js?v=20261112c",
+      "../packages.js": "../packages.js?v=20261112c"
     }
   }
   </script>
-  <script type="module" src="garage.js?v=20261112b"></script>
+  <script type="module" src="garage.js?v=20261112c"></script>
 </body>
 </html>

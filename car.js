@@ -3,22 +3,21 @@
 // and a cabin glow (INTERIOR). Model: assets/porsche/car.gltf, a de-badged Porsche 911
 // ("(FREE) Porsche 911 Carrera 4S" by Karol Miklas, CC BY-SA 4.0, see license.txt there), built by
 // dev-tools/porsche-web/prep.js. Node names start with the part: "paint__", "wheels__", "glass__", "lights__".
-// The Callahan logo is stuck on both doors (logo-decal.js).
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { KTX2Loader } from "three/addons/loaders/KTX2Loader.js";
 import { MeshoptDecoder } from "three/addons/libs/meshopt_decoder.module.js";
-import { addLogos } from "./logo-decal.js?v=20261112b";
 
+const POSTER = /[?&]poster\b/.test(location.search);
 const LIBS = "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/libs/";
 const MODEL_URL = "assets/porsche/car.gltf";
 
 // Camera presets. az = angle around the car (0 = straight at the nose, + = toward the driver's side),
 // el = height angle, dist = multiplier on the fitted distance, look = where the camera aims (fractions of car size),
-// shift = how far the car slides left (fraction of the stage width) to make room for the panel.
+// shift = how far the car slides left (fraction of the stage width) to make room for the packages window.
 const VIEWS = {
-  overview: { az: 0.76, el: 0.17, dist: 1.0, look: [0, 0.36, 0.02], shift: 0 },
+  overview: { az: 0.76, el: 0.17, dist: 1.0, look: [0, 0.36, 0.02], shift: 1 },
   exterior: { az: 0.5, el: 0.15, dist: 1.12, look: [0, 0.36, 0.0], shift: 1 },
   interior: { az: 0.62, el: 0.42, dist: 0.86, look: [0.02, 0.52, -0.06], shift: 1 },
 };
@@ -70,7 +69,7 @@ function shadowBlob() {
 }
 
 export function createCarViewer(container, { onProgress, onReady, onError, onHoverPart, onClickPart, reducedMotion }) {
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: /[?&]poster\b/.test(location.search) });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance", preserveDrawingBuffer: POSTER });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -185,13 +184,6 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
     anchors.interior = new THREE.Vector3(size.W * 0.18, gb.isEmpty() ? size.H * 0.7 : gb.min.y + (gb.max.y - gb.min.y) * 0.45, gc.z + size.L * 0.04);
     cabinLight.position.set(anchors.interior.x * 0.4, size.H * 0.62, anchors.interior.z - size.L * 0.08);
 
-    // the Callahan logo on both doors
-    const doorY = size.H * 0.43, doorZ = -size.L * 0.02;
-    addLogos(scene, paintMeshes, [
-      { from: new THREE.Vector3(size.W * 3, doorY, doorZ), to: new THREE.Vector3(0, doorY, doorZ), size: size.H * 0.3 },
-      { from: new THREE.Vector3(-size.W * 3, doorY, doorZ), to: new THREE.Vector3(0, doorY, doorZ), size: size.H * 0.3 },
-    ], { url: "assets/cd/logo-hd.png" }).catch((e) => console.warn("logo", e));
-
     const blob = shadowBlob();
     blob.rotation.x = -Math.PI / 2;
     blob.scale.set(size.W * 1.55, size.L * 1.25, 1);
@@ -225,8 +217,9 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
     height = Math.max(1, r.height);
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
-    // On narrow stages the panel sits below the car, so there's no need to slide it over
-    shiftAmount = width > 860 ? 0.165 : 0;
+    // On narrow stages the panel sits below the car, so there's no need to slide it over.
+    // The loading poster (rendered with ?poster) keeps the car centred; CSS slides it over on wide screens.
+    shiftAmount = width > 860 && !POSTER ? 0.165 : 0;
     camera.updateProjectionMatrix();
   }
   const ro = new ResizeObserver(resize);
@@ -396,6 +389,7 @@ export function createCarViewer(container, { onProgress, onReady, onError, onHov
 
   return {
     setState, setHover, start, stop,
+    shine: () => startSweep(),   // light sweep across the paint (choosing the Ultimate Detail's buff wax)
     onFrame: (cb) => frameCallbacks.add(cb),
     snapshot: () => renderer.domElement.toDataURL("image/png"),
   };

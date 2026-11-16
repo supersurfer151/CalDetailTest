@@ -1,7 +1,10 @@
 // Garage page controller (car.html, boat.html, motorcycle.html). Builds the part rail, the markers and
 // the service panel from data.js, loads the right viewer, and runs the "click a part → zoom → pick
 // services" flow. Viewers share one interface: focus(id), setHover(id), setInsets({...}), start().
-import { VEHICLES, SERVICES } from "./data.js";
+// The car also has packages (../packages.js): its panel stays open beside the car as a packages window,
+// and clicking a part shows what each package does there plus that part's add-ons.
+import { VEHICLES, SERVICES, PACKAGES, ITEMS } from "./data.js";
+import { ADDONS, ADDON_GROUPS, MORE, PRICING_NOTE, packagesFor } from "../packages.js";
 import { build, toast, openSheet, isSheetOpen, wipeTo, wipeOut } from "./ui.js";
 
 const $ = (s, el = document) => el.querySelector(s);
@@ -16,12 +19,21 @@ const zones = V.zones;
 const zoneById = Object.fromEntries(zones.map((z) => [z.id, z]));
 const keyOf = (id) => `${veh}:${id}`;
 
+// Packages (car only)
+const PK = !!V.packages;
+if (PK) document.body.classList.add("has-pk");
+const pkKey = (id) => keyOf("pkg-" + id);
+const pkById = Object.fromEntries(PACKAGES.map((p) => [p.id, p]));
+const chosenPkg = () => (PK && PACKAGES.find((p) => build.has(pkKey(p.id)))?.id) || null;
+const isPkView = (id) => PK && (!id || id === "full");
+let carModel = null;
+
 const stage = $(".stage");
 const markersEl = $(".markers");
 const rail = $(".rail-row");
 const panel = $(".panel");
 const pBody = $(".p-body");
-const list = $(".p-list");
+const content = $(".p-content");
 const brk = $(".brk");
 const crumbZone = $(".crumb-zone");
 const crumbSep = $(".crumb-zone-sep");
@@ -77,7 +89,8 @@ function hoverZone(id) { hot(id); viewer?.setHover(id); }
 
 function syncRailCounts() {
   railBtns.forEach((b) => {
-    const n = zoneById[b.dataset.zone].services.filter((id) => build.has(keyOf(id))).length;
+    let n = zoneById[b.dataset.zone].services.filter((id) => build.has(keyOf(id))).length;
+    if (PK && b.dataset.zone === "full" && chosenPkg()) n++;
     const badge = $(".rail-n", b);
     badge.hidden = !n;
     badge.textContent = n;
@@ -89,7 +102,7 @@ function serviceHTML(id, i) {
   const s = SERVICES[id];
   const on = build.has(keyOf(id));
   return `
-  <li class="svc${on ? " is-picked" : ""}" style="--i:${i}" data-id="${id}">
+  <li class="svc${on ? " is-picked" : ""}" style="--i:${i}" data-id="${id}"${s.zone ? ` data-zone="${s.zone}"` : ""}>
     <div class="svc-row">
       <button class="svc-main" type="button" aria-expanded="false" aria-controls="svc-${id}">
         <span class="svc-num">${pad(i + 1)}</span>
@@ -109,42 +122,135 @@ function serviceHTML(id, i) {
     </div>
   </li>`;
 }
+const listHTML = (ids) => `<ol class="p-list">${ids.map(serviceHTML).join("")}</ol>`;
 
-function renderPanel(id) {
-  const z = zoneById[id];
-  const i = zones.indexOf(z);
-  $(".p-n").textContent = pad(i + 1);
-  $(".p-total").textContent = pad(zones.length);
-  $(".p-title").textContent = z.name;
-  $(".p-blurb").textContent = z.blurb;
-  list.innerHTML = z.services.map(serviceHTML).join("");
+// ----- packages window (car) -----
+const pkItems = (p) => [...p.exterior, ...p.interior];
+const onlyIn = (k) => PACKAGES.filter((p) => pkItems(p).includes(k)).length === 1;
+const isExt = (k) => ["paint", "wheels"].includes(ITEMS[k].zone);
+function pkItemHTML(p, k, off) {
+  const it = ITEMS[k];
+  const star = it.star && !off;
+  return `<li class="pk-i${star ? " is-star" : ""}${off ? " is-off" : ""}" data-zone="${it.zone}">
+    <span>${it.t}${star && onlyIn(k) ? `<em>Only in ${p.name}</em>` : ""}${off ? `<span class="sr"> (not included)</span>` : ""}</span>${star && it.note ? `<small>${it.note}</small>` : ""}</li>`;
+}
+function pkHTML(p, i, openId) {
+  const on = chosenPkg() === p.id, open = p.id === openId;
+  const lacks = p.lacks || [];
+  const col = (title, keys) => `<div><p class="pk-col-t">${title}</p><ul>${keys.map((k) => pkItemHTML(p, k, false)).join("")}${lacks.filter((k) => isExt(k) === (title === "Exterior")).map((k) => pkItemHTML(p, k, true)).join("")}</ul></div>`;
+  const up = p.upsell && pkById[p.upsell.to];
+  return `
+  <article class="pk${p.badge ? " is-rec" : ""}${on ? " is-on" : ""}${open ? " is-open" : ""}" data-pk="${p.id}" style="--i:${i}">
+    ${p.badge ? `<span class="pk-badge">${p.badge}</span>` : ""}
+    <button class="pk-head" type="button" aria-expanded="${open}" aria-controls="pk-${p.id}">
+      <span class="pk-n">${pkItems(p).length} services</span>
+      <span class="pk-title">${p.name} <span>Detail</span></span>
+      <span class="pk-line">${p.line}</span>
+      <span class="pk-dot" aria-hidden="true"></span>
+      <span class="sr pk-state">${on ? ", selected" : ""}</span>
+    </button>
+    <div class="pk-body" id="pk-${p.id}"${open ? "" : " inert"}><div class="pk-in"><div class="pk-pad">
+      <div class="pk-cols">${col("Exterior", p.exterior)}${col("Interior", p.interior)}</div>
+      <button class="pk-pick" type="button" aria-pressed="${on}">${on ? `✓ ${p.full} selected` : `Choose ${p.name}`}</button>
+      ${up ? `<button class="pk-up" type="button" data-to="${up.id}"><span>${p.upsell.text}</span><b>Upgrade to ${up.name} →</b></button>` : ""}
+    </div></div></div>
+  </article>`;
+}
+function packagesHTML() {
+  const openId = chosenPkg() || PACKAGES[0].id;
+  return `
+  <div class="pk-list" role="group" aria-label="Detail packages">${PACKAGES.map((p, i) => pkHTML(p, i, openId)).join("")}</div>
+  <p class="pk-trust"><span class="stars" aria-hidden="true">★★★★★</span> 4.8 average Google rating · Certified XPEL installer</p>
+  <section class="pk-sec" aria-label="Add-ons">
+    <h3 class="pk-sec-t">Add-ons</h3>
+    <p class="pk-sec-sub">Add them to any package, or book them on their own.</p>
+    ${Object.entries(ADDON_GROUPS).map(([g, label]) => `<p class="pk-grp">${label}</p>${listHTML(ADDONS.filter((a) => a.group === g).map((a) => a.id))}`).join("")}
+  </section>
+  <details class="pk-more">
+    <summary>More services <span class="pk-more-n">${MORE.length}</span></summary>
+    ${listHTML(MORE.map((m) => m.id))}
+  </details>`;
+}
+function zoneHTML(z) {
+  const rows = packagesFor(z.id);
+  const addons = z.services.filter((id) => SERVICES[id].kind === "addon");
+  const more = z.services.filter((id) => SERVICES[id].kind !== "addon");
+  const chosen = chosenPkg();
+  return `
+  ${rows.length ? `<p class="pz-t">In our packages</p>
+  <div class="pz">${rows.map(({ pkg, items }) => `
+    <button class="pz-row${pkg.id === chosen ? " is-on" : ""}${pkg.badge ? " is-rec" : ""}" type="button" data-pk="${pkg.id}" aria-pressed="${pkg.id === chosen}" aria-label="${pkg.full}: ${items.map((it) => it.t).join(", ")}">
+      <span class="pz-name">${pkg.name}${pkg.badge ? `<em>${pkg.badge}</em>` : ""}</span>
+      <span class="pz-items">${items.map((it) => (it.star ? `<b>${it.t}</b>` : it.t)).join(" · ")}</span>
+      <span class="pk-dot" aria-hidden="true"></span>
+    </button>`).join("")}</div>` : ""}
+  ${addons.length ? `<p class="pz-t">Add-ons for this part</p>${listHTML(addons)}` : ""}
+  ${more.length ? `<p class="pz-t">${rows.length || addons.length ? "Also available" : "Services"}</p>${listHTML(more)}` : ""}`;
+}
+
+function setHead({ count, kick, up, title, blurb }) {
+  $(".p-count").hidden = !count;
+  $(".p-steps").hidden = !count;
+  if (count) { $(".p-n").textContent = pad(count[0]); $(".p-total").textContent = pad(count[1]); }
+  $(".p-kick").hidden = !kick;
+  $(".p-kick").textContent = kick || "";
+  $(".p-up").hidden = !up;
+  $(".p-title").textContent = title;
+  $(".p-blurb").innerHTML = blurb;
+}
+
+function renderPanel(id, { headOnly = false } = {}) {
+  const i = id ? zones.findIndex((z) => z.id === id) : -1;
+  const pkView = isPkView(id);
+  panel.classList.toggle("is-pk", pkView);
+  if (pkView) {
+    setHead({ count: i >= 0 && [i + 1, zones.length], kick: i < 0 && "Car detailing", title: "Choose your detail", blurb: `${PRICING_NOTE}. Pick a package and any extras, then request a quote.<span class="p-blurb-x"> Tap any part of the car to see what we do there.</span>` });
+    if (headOnly) return;
+    content.innerHTML = packagesHTML();
+  } else {
+    const z = zoneById[id];
+    setHead({ count: [i + 1, zones.length], up: PK, title: z.name, blurb: z.blurb });
+    content.innerHTML = PK ? zoneHTML(z) : listHTML(z.services);
+    // a part with a single service opens it straight away (unless the package rows come first)
+    const all = $$(".svc", content);
+    if (all.length === 1 && !$(".pz", content)) toggleItem(all[0], true);
+  }
   pBody.scrollTop = 0;
-  if (z.services.length === 1) toggleItem($(".svc", list), true);
   syncFoot();
 }
 function syncFoot() {
   const n = build.size;
-  $(".p-foot-note").textContent = n ? `${n} service${n > 1 ? "s" : ""} on your build sheet` : "Tap + to add a service to your build sheet";
+  const note = $(".p-foot-note");
+  if (PK) {
+    const chosen = chosenPkg();
+    const extras = build.list().filter((k) => k.startsWith("car:") && !k.startsWith("car:pkg-")).length;
+    const ex = extras ? `${extras} add-on${extras > 1 ? "s" : ""}` : "";
+    note.innerHTML = chosen ? `<b>${pkById[chosen].full}</b>${ex ? ` + ${ex}` : ""}` : ex ? `${ex} · no package yet` : "No package chosen yet";
+    syncPkBar(chosen, ex);
+  } else note.textContent = n ? `${n} service${n > 1 ? "s" : ""} on your build sheet` : "Tap + to add a service to your build sheet";
 }
 
 function toggleItem(li, open) {
   const btn = $(".svc-main", li);
   const more = $(".svc-more", li);
   const willOpen = open ?? btn.getAttribute("aria-expanded") !== "true";
-  if (willOpen) $$(".svc.is-open", list).forEach((o) => o !== li && toggleItem(o, false));
+  if (willOpen) $$(".svc.is-open", content).forEach((o) => o !== li && toggleItem(o, false));
   btn.setAttribute("aria-expanded", String(willOpen));
   li.classList.toggle("is-open", willOpen);
   more.inert = !willOpen;
   if (willOpen) {
     const img = $("img[data-src]", li);
     if (img) { img.onload = () => img.classList.add("is-loaded"); img.src = img.dataset.src; img.removeAttribute("data-src"); }
-    setTimeout(() => {
-      const top = li.offsetTop - 8;
-      if (top < pBody.scrollTop || li.offsetTop + li.offsetHeight > pBody.scrollTop + pBody.clientHeight) {
-        pBody.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
-      }
-    }, 320);
+    scrollIntoPanel(li, 320);
   }
+}
+function scrollIntoPanel(el, delay) {
+  setTimeout(() => {
+    const top = el.getBoundingClientRect().top - pBody.getBoundingClientRect().top + pBody.scrollTop - 8;
+    if (top < pBody.scrollTop || top + el.offsetHeight > pBody.scrollTop + pBody.clientHeight) {
+      pBody.scrollTo({ top, behavior: reduced ? "auto" : "smooth" });
+    }
+  }, delay);
 }
 
 function togglePick(li) {
@@ -152,8 +258,46 @@ function togglePick(li) {
   const on = build.toggle(keyOf(id));
   toast(on ? `Added ${SERVICES[id].name}` : `Removed ${SERVICES[id].name}`);
 }
+
+// Packages: one at a time. Choosing the one you already have clears it.
+function choosePkg(id, { keep = false } = {}) {
+  const was = chosenPkg();
+  const next = was === id && !keep ? null : id;
+  if (next === was) return;
+  PACKAGES.forEach((p) => { if (p.id !== next && build.has(pkKey(p.id))) build.remove(pkKey(p.id)); });
+  if (next) build.toggle(pkKey(next));
+  toast(next ? `${pkById[next].full} selected` : `${pkById[was].full} removed`);
+  if (next === "ultimate") carModel?.shine?.();
+}
+function openPk(id) {
+  $$(".pk", content).forEach((el) => {
+    const open = el.dataset.pk === id;
+    el.classList.toggle("is-open", open);
+    $(".pk-head", el).setAttribute("aria-expanded", String(open));
+    $(".pk-body", el).inert = !open;
+  });
+  const el = $(`.pk[data-pk="${id}"]`, content);
+  if (el) scrollIntoPanel(el, 360);
+}
+function syncPk() {
+  const chosen = chosenPkg();
+  $$(".pk", content).forEach((el) => {
+    const p = pkById[el.dataset.pk], on = p.id === chosen;
+    el.classList.toggle("is-on", on);
+    const b = $(".pk-pick", el);
+    b.setAttribute("aria-pressed", String(on));
+    b.textContent = on ? `✓ ${p.full} selected` : `Choose ${p.name}`;
+    $(".pk-state", el).textContent = on ? ", selected" : "";
+  });
+  $$(".pz-row", content).forEach((r) => {
+    const on = r.dataset.pk === chosen;
+    r.classList.toggle("is-on", on);
+    r.setAttribute("aria-pressed", String(on));
+  });
+}
+
 function syncPicked() {
-  $$(".svc", list).forEach((li) => {
+  $$(".svc", content).forEach((li) => {
     const on = build.has(keyOf(li.dataset.id));
     li.classList.toggle("is-picked", on);
     const add = $(".svc-add", li);
@@ -161,17 +305,51 @@ function syncPicked() {
     add.textContent = on ? "✓" : "+";
     $(".svc-pick", li).textContent = on ? "✓ On your build sheet" : "+ Add to build sheet";
   });
+  if (PK) syncPk();
   syncRailCounts();
   syncFoot();
 }
 build.on(syncPicked);
 
-list.addEventListener("click", (e) => {
-  const li = e.target.closest(".svc");
+content.addEventListener("click", (e) => {
+  const t = e.target;
+  const pk = t.closest(".pk");
+  if (pk) {
+    if (t.closest(".pk-head")) { if (!pk.classList.contains("is-open")) openPk(pk.dataset.pk); }
+    else if (t.closest(".pk-pick")) choosePkg(pk.dataset.pk);
+    else if (t.closest(".pk-up")) { const to = t.closest(".pk-up").dataset.to; choosePkg(to, { keep: true }); openPk(to); }
+    return;
+  }
+  const row = t.closest(".pz-row");
+  if (row) { choosePkg(row.dataset.pk); return; }
+  const li = t.closest(".svc");
   if (!li) return;
-  if (e.target.closest(".svc-main")) toggleItem(li);
-  else if (e.target.closest(".svc-add, .svc-pick")) togglePick(li);
+  if (t.closest(".svc-main")) toggleItem(li);
+  else if (t.closest(".svc-add, .svc-pick")) togglePick(li);
 });
+// Pointing at a line in the packages window lights up that part of the car
+content.addEventListener("pointerover", (e) => {
+  if (e.pointerType !== "mouse" || (focus && focus !== "full")) return;
+  const z = e.target.closest("[data-zone]")?.dataset.zone;
+  hoverZone(zoneById[z] && z !== "full" ? z : null);
+});
+content.addEventListener("pointerleave", () => { if (!focus || focus === "full") hoverZone(null); });
+$(".p-up").addEventListener("click", () => setFocus(narrow() ? "full" : null));
+
+// Phones: a bar above the part rail opens the packages sheet
+const pkBar = PK ? document.createElement("button") : null;
+if (pkBar) {
+  pkBar.className = "pk-bar";
+  pkBar.type = "button";
+  pkBar.innerHTML = `<span class="pk-bar-k">Packages</span><span class="pk-bar-v"></span><span class="pk-bar-go" aria-hidden="true">↑</span>`;
+  pkBar.addEventListener("click", () => setFocus("full"));
+  document.body.append(pkBar);
+}
+function syncPkBar(chosen, ex) {
+  if (!pkBar) return;
+  $(".pk-bar-v", pkBar).textContent = chosen ? `${pkById[chosen].full} ✓${ex ? ` + ${ex}` : ""}` : PACKAGES.map((p) => p.name).join(" · ");
+  pkBar.classList.toggle("is-chosen", !!chosen);
+}
 
 const step = (d) => {
   const i = focus ? zones.findIndex((z) => z.id === focus) : -1;
@@ -190,16 +368,17 @@ function setFocus(id, { fromHash = false } = {}) {
   railBtns.forEach((b) => b.setAttribute("aria-current", String(b.dataset.zone === id)));
   crumbZone.textContent = id ? zoneById[id].name : "";
   crumbSep.hidden = crumbZone.hidden = !id;
-  panel.inert = !id;
-  if (id) {
-    if (prev && !reduced) {
+  syncPanelInert();
+  brk.classList.remove("is-on");
+  if (id) $(".brk-tag").textContent = zoneById[id].name;
+  if (isPkView(prev) && isPkView(id)) renderPanel(id, { headOnly: true });   // packages ↔ packages: keep the list as it is
+  else if (id || PK) {
+    // cross-fade when the panel was already on screen, otherwise just fill it before it slides in
+    const wasShown = PK ? !narrow() || !!prev : !!prev;
+    if (wasShown && !reduced) {
       pBody.classList.add("is-switching");
       setTimeout(() => { renderPanel(id); pBody.classList.remove("is-switching"); }, 180);
     } else renderPanel(id);
-    brk.classList.remove("is-on");
-    $(".brk-tag").textContent = zoneById[id].name;
-  } else {
-    brk.classList.remove("is-on");
   }
   hot(null);
   updateInsets();
@@ -225,7 +404,8 @@ let freeRect = { x0: 0, y0: 0, x1: window.innerWidth, y1: window.innerHeight };
 function updateInsets() {
   if (!viewer) return;
   const barH = $(".bar").getBoundingClientRect().height;
-  const railH = window.innerHeight - $(".rail-row").getBoundingClientRect().top + 8;
+  // on car phones the packages bar sits on top of the rail
+  const railH = window.innerHeight - (pkBar && narrow() ? pkBar : $(".rail-row")).getBoundingClientRect().top + 8;
   const intro = $(".g-intro").getBoundingClientRect();
   if (narrow()) {
     const sheetH = panel.getBoundingClientRect().height;
@@ -233,10 +413,14 @@ function updateInsets() {
     viewer.setInsets(ins);
     freeRect = { x0: 0, y0: ins.top, x1: window.innerWidth, y1: window.innerHeight - ins.bottom };
   } else {
-    const pw = panel.getBoundingClientRect().width;
-    // on mid-size screens keep the car clear of the intro text
-    const left = !focus && (veh === "moto" || window.innerWidth < 1250) ? intro.right + 12 : 0;
-    const ins = { top: barH, right: focus ? pw : 0, left, bottom: focus ? Math.min(railH, 90) : railH };
+    const pr = panel.getBoundingClientRect();
+    // the car's packages window floats beside the car, so the car centres in the space to its left
+    const pw = PK ? window.innerWidth - pr.left + 16 : pr.width;
+    // on mid-size screens keep the car clear of the intro text by sitting beside it; the car (whose
+    // packages window takes the right side) sits a little lower instead
+    const left = !focus && !PK && (veh === "moto" || window.innerWidth < 1250) ? intro.right + 12 : 0;
+    const top = !focus && PK ? Math.max(barH, barH + (intro.bottom - barH) * 0.5) : barH;
+    const ins = { top, right: focus || PK ? pw : 0, left, bottom: focus ? Math.min(railH, 90) : railH };
     viewer.setInsets(ins);
     freeRect = { x0: left, y0: ins.top, x1: window.innerWidth - ins.right, y1: window.innerHeight - ins.bottom };
   }
@@ -285,6 +469,11 @@ function onFrame({ anchors, rect, photo }) {
   } else brk.classList.remove("is-on");
 }
 
+// The panel is hidden (and out of the tab order) unless a part is open; the car's packages window
+// stays open beside the car on wider screens.
+function syncPanelInert() { panel.inert = !(focus || (PK && !narrow())); }
+matchMedia("(max-width: 860px)").addEventListener("change", () => { syncPanelInert(); updateInsets(); });
+
 // ---------------- Keyboard ----------------
 document.addEventListener("keydown", (e) => {
   if (e.metaKey || e.ctrlKey || e.altKey || isSheetOpen()) return;
@@ -302,8 +491,9 @@ document.addEventListener("keydown", (e) => {
 
 // ---------------- Boot ----------------
 syncRailCounts();
+if (PK) renderPanel(null);
 syncFoot();
-panel.inert = true;
+syncPanelInert();
 
 function canWebGL() { try { return !!document.createElement("canvas").getContext("webgl2"); } catch { return false; } }
 
@@ -324,6 +514,7 @@ async function boot() {
     const load = veh === "car" ? mod.loadCar : mod.loadBoat;
     const model = await load(viewer, { onProgress: (p) => setProgress(0.1 + p * 0.85), reducedMotion: reduced });
     viewer.setModel(model);
+    carModel = model;
   }
   updateInsets();
   viewer.start();

@@ -59,6 +59,9 @@ function syncCounts(bump) {
   });
 }
 
+// Packages first, then everything else in the order it was picked
+const pkgFirst = (arr) => arr.sort((a, b) => (b.kind === "package") - (a.kind === "package"));
+
 // ---------------- Drawer ----------------
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 let sheet, scrim, lastFocus, madeInert = [];
@@ -116,7 +119,7 @@ function renderSheet() {
   if (!items.length) {
     list.innerHTML = `
       <div class="sheet-empty">
-        <p>Nothing on your build sheet yet. Pick a vehicle, tap the part you want taken care of and add services. Or just send us a message below.</p>
+        <p>Nothing on your build sheet yet. Pick a vehicle, choose a package or tap the part you want taken care of and add services. Or just send us a message below.</p>
         <div class="sheet-go">
           ${Object.values(VEHICLES).map((v) => `<a href="${v.page}" data-wipe="${v.name}">${v.name}<span aria-hidden="true">→</span></a>`).join("")}
         </div>
@@ -127,7 +130,7 @@ function renderSheet() {
     list.innerHTML = Object.entries(groups).map(([veh, arr]) => `
       <div class="sheet-group">
         <h3>${VEHICLES[veh].name}<a href="${VEHICLES[veh].page}" data-wipe="${VEHICLES[veh].name}">Edit</a></h3>
-        ${arr.map((s) => `<div class="sheet-item"><span>${esc(s.name)}<small>${esc(s.short)}</small></span><button type="button" data-remove="${s.key}" aria-label="Remove ${esc(s.name)}">×</button></div>`).join("")}
+        ${pkgFirst(arr).map((s) => `<div class="sheet-item"><span>${esc(s.name)}<small>${esc(s.short)}</small></span><button type="button" data-remove="${s.key}" aria-label="Remove ${esc(s.name)}">×</button></div>`).join("")}
       </div>`).join("");
   }
   const hasBoat = items.some((s) => s.veh === "boat");
@@ -163,7 +166,7 @@ function send(form) {
     const groups = {};
     items.forEach((s) => (groups[s.veh] ||= []).push(s));
     Object.entries(groups).forEach(([veh, arr]) => {
-      lines.push("", `${VEHICLES[veh].name}:`, ...arr.map((s) => `- ${s.name}`));
+      lines.push("", `${VEHICLES[veh].name}:`, ...pkgFirst(arr).map((s) => `- ${s.name}${s.kind === "package" ? " (package)" : ""}`));
     });
     lines.push("");
   } else {

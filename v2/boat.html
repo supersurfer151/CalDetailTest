@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,600;0,700;1,600&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="v2.css?v=20261112b" />
+  <link rel="stylesheet" href="v2.css?v=20261112c" />
 </head>
 <body class="garage is-loading" data-vehicle="boat">
   <div class="wipe wipe-cover" aria-hidden="true">
@@ -52,13 +52,15 @@
     <span class="p-handle" aria-hidden="true"></span>
     <div class="p-head">
       <div class="p-idx">
-        <span><b class="p-n">01</b> / <span class="p-total">06</span></span>
+        <button class="p-up" type="button" hidden><span aria-hidden="true">‹</span> Packages</button>
+        <span class="p-kick" hidden></span>
+        <span class="p-count"><b class="p-n">01</b> / <span class="p-total">06</span></span>
         <span class="p-steps"><button class="p-prev" type="button" aria-label="Previous part">‹</button><button class="p-next" type="button" aria-label="Next part">›</button></span>
       </div>
       <h2 class="p-title"></h2>
       <p class="p-blurb"></p>
     </div>
-    <div class="p-body"><ol class="p-list"></ol></div>
+    <div class="p-body"><div class="p-content"></div></div>
     <div class="p-foot">
       <p class="p-foot-note"></p>
       <button class="btn btn-solid" type="button" data-sheet-open>Build sheet&nbsp;<span class="sheet-count" data-sheet-count>0</span></button>
@@ -75,18 +77,18 @@
     "imports": {
       "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
       "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
-      "./ui.js": "./ui.js?v=20261112b",
-      "./data.js": "./data.js?v=20261112b",
-      "./hub.js": "./hub.js?v=20261112b",
-      "./garage.js": "./garage.js?v=20261112b",
-      "./rig.js": "./rig.js?v=20261112b",
-      "./car3d.js": "./car3d.js?v=20261112b",
-      "./boat3d.js": "./boat3d.js?v=20261112b",
-      "./moto.js": "./moto.js?v=20261112b",
-      "../logo-decal.js": "../logo-decal.js?v=20261112b"
+      "./ui.js": "./ui.js?v=20261112c",
+      "./data.js": "./data.js?v=20261112c",
+      "./hub.js": "./hub.js?v=20261112c",
+      "./garage.js": "./garage.js?v=20261112c",
+      "./rig.js": "./rig.js?v=20261112c",
+      "./car3d.js": "./car3d.js?v=20261112c",
+      "./boat3d.js": "./boat3d.js?v=20261112c",
+      "./moto.js": "./moto.js?v=20261112c",
+      "../packages.js": "../packages.js?v=20261112c"
     }
   }
   </script>
-  <script type="module" src="garage.js?v=20261112b"></script>
+  <script type="module" src="garage.js?v=20261112c"></script>
 </body>
 </html>
